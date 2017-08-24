@@ -10,5 +10,11 @@ let package = Package(
             dependencies: ["SashaCore"]
         ),
         Target(name: "SashaCore")
+    ],
+    dependencies: [
+        .Package(
+            url: "https://github.com/johnsundell/files.git",
+            majorVersion: 1
+        )
     ]
 )

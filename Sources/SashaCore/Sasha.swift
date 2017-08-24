@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Files
 
 public final class Sasha {
     
@@ -17,6 +18,23 @@ public final class Sasha {
     }
     
     public func run() throws {
-        print("Hello world")
+        guard arguments.count > 1 else {
+            throw Error.missingFileName
+        }
+        let fileName = arguments[1]
+        
+        do {
+            try FileSystem().createFile(at: fileName)
+        }
+        catch {
+            throw Error.failedToCreateFile
+        }
+    }
+}
+
+public extension Sasha {
+    enum Error: Swift.Error {
+        case missingFileName
+        case failedToCreateFile
     }
 }

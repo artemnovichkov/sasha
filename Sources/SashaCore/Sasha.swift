@@ -13,7 +13,7 @@ public final class Sasha {
     
     private let arguments: [String]
     
-    init(arguments: [String] = CommandLine.arguments) {
+    public init(arguments: [String] = CommandLine.arguments) {
         self.arguments = arguments
     }
     

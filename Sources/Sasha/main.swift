@@ -6,5 +6,5 @@ do {
     try sasha.run()
 }
 catch {
-    print("Whoops! An error occurred: \(error)")
+    print("❌ An error occurred:\n\(error.localizedDescription)")
 }

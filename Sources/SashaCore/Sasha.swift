@@ -33,16 +33,28 @@ public final class Sasha {
                 let finalPath = projectName + FolderService.Keys.slash + path
                 try FileSystem().createFolder(at: finalPath)
             }
+            print("✅ Project \(projectName) was successfully added.")
         }
         catch {
-            throw Error.failedToCreateFolder
+            throw Error.main
         }
     }
 }
 
 public extension Sasha {
+    
     enum Error: Swift.Error {
+        case main
         case missingProjectName
-        case failedToCreateFolder
+    }
+}
+
+extension Sasha.Error: LocalizedError {
+    
+    public var errorDescription: String? {
+        switch self {
+        case .main: return "Project creation error. Please check that project.sasha file exists and has correct structure"
+        case .missingProjectName: return "Can't find project name. Please add it as parameter, for example: sasha Facebook"
+        }
     }
 }

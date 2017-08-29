@@ -1,15 +1,9 @@
 
 # Sasha
-<p align="center">
-    <img src="https://img.shields.io/badge/swift-4.0-orange.svg?style=flat" alt="Swift 4.0" />
-    <img src="https://img.shields.io/badge/make-compatible-brightgreen.svg?style=flat" alt="Make" />
-  <a href="https://swift.org/package-manager">
-    <img src="https://img.shields.io/badge/spm-compatible-brightgreen.svg?style=flat" alt="Swift Package Manager" />
-  </a>
-  <a href="https://github.com/JohnSundell/Marathon">
-    <img src="https://img.shields.io/badge/marathon-compatible-brightgreen.svg?style=flat" alt="Marathon" />
-  </a>
-</p>
+[![Swift 4.0](https://img.shields.io/badge/swift-3.1-orange.svg?style=flat)](#)
+[![Make](https://img.shields.io/badge/make-compatible-brightgreen.svg?style=flat)](#)
+[![Swift Package Manager](https://img.shields.io/badge/spm-compatible-brightgreen.svg?style=flat)](https://swift.org/package-manager)
+[![Marathon](https://img.shields.io/badge/marathon-compatible-brightgreen.svg?style=flat)](https://github.com/JohnSundell/Marathon)
 
 Sasha is easy-to-use script for folder tree generation.
 

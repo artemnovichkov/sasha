@@ -9,7 +9,14 @@ Sasha is easy-to-use script for folder tree generation.
 
 ## Using
 
-At first, you should create a configuration file with name `project.sasha` in script directory (`/usr/local/bin` by default) and fill it out with needed project structure, for example:
+
+Run `sasha` in any folder with project name as first parameter, for example:
+
+```
+$ sasha ProjectName
+```
+
+By default Sasha uses this project structure:
 
 ```
 UI
@@ -39,13 +46,7 @@ stuff
 -source
 ```
 
-Use dashes for different folder levels.
-
-Then just run `sasha` in any folder with project name as first parameter, for example:
-
-```
-$ sasha ProjectName
-```
+To change it, open `/usr/local/bin/project.sasha` file in your favourite text editor and make custom project structure.
 
 ## Installing
 

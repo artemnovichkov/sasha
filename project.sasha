@@ -13,10 +13,10 @@ UX
 --old
 --png
 references
--main-screens
+-main_screens
 -menu
 -cards
--another-case
+-another_case
 stuff
 -logos
 -icons

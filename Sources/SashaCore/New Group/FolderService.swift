@@ -36,7 +36,7 @@ final class FolderService {
         let components = string.components(separatedBy: "\n")
         let allFolders = components.map { component -> Folder in
             let name = component.replacingOccurrences(of: "-", with: "")
-            let level = component.filter { $0 == "-" }
+            let level = component.characters.filter { $0 == "-" }
             return Folder(name: name, level: level.count)
         }
         var paths = [String]()

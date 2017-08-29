@@ -1,6 +1,6 @@
 
 # Sasha
-[![Swift 4.0](https://img.shields.io/badge/swift-4.0-orange.svg?style=flat)](#)
+[![Swift 3.1](https://img.shields.io/badge/swift-3.1-orange.svg?style=flat)](#)
 [![Make](https://img.shields.io/badge/make-compatible-brightgreen.svg?style=flat)](#)
 [![Swift Package Manager](https://img.shields.io/badge/spm-compatible-brightgreen.svg?style=flat)](https://swift.org/package-manager)
 [![Marathon](https://img.shields.io/badge/marathon-compatible-brightgreen.svg?style=flat)](https://github.com/JohnSundell/Marathon)

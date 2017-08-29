@@ -54,7 +54,7 @@ extension Sasha.Error: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .main: return "Project creation error. Please check that project.sasha file exists and has correct structure"
-        case .missingProjectName: return "Can't find project name. Please add it as parameter, for example: sasha Facebook"
+        case .missingProjectName: return "Can't find project name. Please add it as parameter, for example: sasha ProjectName"
         }
     }
 }

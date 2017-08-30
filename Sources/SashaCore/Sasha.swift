@@ -13,6 +13,7 @@ public final class Sasha {
     
     private let arguments: [String]
     private let folderService = FolderService()
+    private let fileSystem = FileSystem()
     
     public init(arguments: [String] = CommandLine.arguments) {
         self.arguments = arguments
@@ -25,13 +26,13 @@ public final class Sasha {
         let projectName = arguments[1]
         
         do {
-            let projectFile = try FileSystem().currentFolder.file(named: "project.sasha")
+            let projectFile = try fileSystem.currentFolder.file(named: "project.sasha")
             let projectString = try projectFile.readAsString()
             
             let paths = folderService.paths(fromString: projectString)
             try paths.forEach { path in
                 let finalPath = projectName + FolderService.Keys.slash + path
-                try FileSystem().createFolder(at: finalPath)
+                try fileSystem.createFolder(at: finalPath)
             }
             print("✅ Project \(projectName) was successfully added.")
         }

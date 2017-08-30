@@ -65,11 +65,12 @@ $ git clone https://github.com/artemnovichkov/sasha.git
 $ cd sasha
 $ swift build -c release -Xswiftc -static-stdlib
 $ cp -f .build/release/sasha /usr/local/bin/sasha
+$ cp -f project.sasha /usr/local/bin
 ```
 ### Marathon
 
 - Install [Marathon](https://github.com/johnsundell/marathon#installing).
-- Add Carting to Marathon using `$ marathon add git@github.com:artemnovichkov/sasha.git`. Alternatively, add `git@github.com:artemnovichkov/sasha.git` to your `Marathonfile`.
+- Add Sasha to Marathon using `$ marathon add git@github.com:artemnovichkov/sasha.git`. Alternatively, add `git@github.com:artemnovichkov/sasha.git` to your `Marathonfile`.
 - Write your script, then run it using `$ marathon run <path-to-your-script>`.
 
 ## Author

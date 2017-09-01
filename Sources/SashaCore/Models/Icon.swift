@@ -10,18 +10,18 @@ import Foundation
 final class Icon {
     
     enum Idiom {
-        case iphone, ipad
+        case iphone, ipad, iosMarketing
     }
     
     let idiom: Idiom
-    let size: Int
+    let size: Float
     let scale: Int
     let filename: String
     
-    init(idiom: Idiom, size: Int, scale: Int, filename: String) {
+    init(idiom: Idiom, size: Float, scale: Int, filename: String) {
         self.idiom = idiom
         self.size = size
         self.scale = scale
-        self.filename = filename
+        self.filename = filename + "-\(size)x\(size)@\(scale)x.png"
     }
 }

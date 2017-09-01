@@ -15,14 +15,11 @@ final class Icon {
     
     let idiom: Idiom
     let size: Float
-    let scale: Int
-    let filename: String
+    let scale: Float
     
-    init(idiom: Idiom, size: Float, scale: Int, filename: String) {
+    init(idiom: Idiom, size: Float, scale: Float) {
         self.idiom = idiom
         self.size = size
         self.scale = scale
-        let sizeString = String(format: "%.0f", size)
-        self.filename = filename + "-\(sizeString)x\(sizeString)@\(scale)x.png"
     }
 }

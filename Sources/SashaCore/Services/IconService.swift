@@ -14,41 +14,60 @@ final class IconService {
         case cantCreateImage
         case cantGetSize
         case wrongSize
+        case cantRenderImage
+    }
+    
+    private enum Keys {
+        static let width = "PixelWidth"
+        static let height = "PixelHeight"
+        static let lanczosFilterName = "CILanczosScaleTransform"
+        static let iconName = "Icon-App"
+        static let iconSetName = "AppIcon.appiconset"
     }
     
     private let iconSetFactory: IconSetFactory
+    private let fileSystem: FileSystem
     
-    init(iconSetFactory: IconSetFactory = IconSetFactory()) {
+    init(iconSetFactory: IconSetFactory = IconSetFactory(),
+         fileSystem: FileSystem = FileSystem()) {
         self.iconSetFactory = iconSetFactory
+        self.fileSystem = fileSystem
     }
     
-    func generateIcons(for url: URL) throws {
-        guard let image = CIImage(contentsOf: url) else {
+    func generateIcons(for imageURL: URL) throws {
+        guard let image = CIImage(contentsOf: imageURL) else {
             throw Error.cantCreateImage
         }
-        guard let width = image.properties["PixelWidth"] as? CGFloat,
-        let height = image.properties["PixelHeight"] as? CGFloat else {
-            throw Error.cantGetSize
+        guard let width = image.properties[Keys.width] as? Float,
+            let height = image.properties[Keys.height] as? Float else {
+                throw Error.cantGetSize
         }
         guard width == 1024, height == 1024 else {
             throw Error.wrongSize
         }
-        let filter = CIFilter(name: "CILanczosScaleTransform")!
+        let filter = CIFilter(name: Keys.lanczosFilterName)!
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(1, forKey: kCIInputAspectRatioKey)
         
-        let context = CIContext()
+        let context = CIContext(options: [kCIContextUseSoftwareRenderer: false])
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
         
-        iconSetFactory.makeSet(withName: "Icon-App").images.forEach { icon in
-            let scale = icon.size * Float(icon.scale) / Float(width)
+        try iconSetFactory.makeIconSet().images.forEach { icon in
+            let scale = icon.size * icon.scale / width
             filter.setValue(scale, forKey: kCIInputScaleKey)
-            let outputImage = filter.value(forKey: kCIOutputImageKey) as! CIImage
-            let outputData = context.jpegRepresentation(of: outputImage,
-                                                        colorSpace: CGColorSpaceCreateDeviceRGB(),
-                                                        options: [:])
+            guard let outputImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else {
+                throw Error.cantRenderImage
+            }
+            guard let outputData = context.jpegRepresentation(of: outputImage, colorSpace: colorSpace, options: [:]) else {
+                try fileSystem.currentFolder.subfolder(named: Keys.iconSetName).delete()
+                throw Error.cantRenderImage
+            }
             
-            let file = try! FileSystem().createFile(at: "AppIcon.appiconset/" + icon.filename)
-            try! file.write(data: outputData!)
+            let sizeString = String(format: "%g", icon.size)
+            let scaleString = String(format: "%g", icon.scale)
+            let filename = Keys.iconName + "-\(sizeString)x\(sizeString)@\(scaleString)x.png"
+            let file = try fileSystem.createFile(at: Keys.iconSetName + "/" + filename)
+            try file.write(data: outputData)
         }
     }
 }
@@ -60,6 +79,7 @@ extension IconService.Error: LocalizedError {
         case .cantCreateImage: return "Can't create an image."
         case .cantGetSize: return "Can't get image size."
         case .wrongSize: return "Image has wrong size."
+        case .cantRenderImage: return "Can't render the image."
         }
     }
 }

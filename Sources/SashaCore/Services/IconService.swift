@@ -52,7 +52,8 @@ final class IconService {
         let context = CIContext(options: [kCIContextUseSoftwareRenderer: false])
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         
-        let iconSet = iconSetFactory.makeSet(withName: Keys.iconName)
+        let iconSet = iconSetFactory.makeSet(withName: Keys.iconName,
+                                             idioms: [.iphone, .ipad, .iosMarketing])
         try iconSet.images.forEach { icon in
             let scale = icon.size * icon.scale / width
             filter.setValue(scale, forKey: kCIInputScaleKey)

@@ -10,7 +10,7 @@ import Foundation
 final class Icon: Codable {
     
     enum Idiom: String, Codable {
-        case iphone, ipad, iosMarketing = "ios-marketing"
+        case iphone, ipad, iosMarketing = "ios-marketing", car, mac
     }
     
     let idiom: Idiom

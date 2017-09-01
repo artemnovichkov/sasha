@@ -57,6 +57,17 @@ final class IconSetFactory {
                     Icon(idiom: .mac, size: 256, scale: 2, filename: name),
                     Icon(idiom: .mac, size: 512, scale: 1, filename: name),
                     Icon(idiom: .mac, size: 512, scale: 2, filename: name)]
+        case .watch:
+            return [Icon(idiom: .watch, size: 24, scale: 2, filename: name),
+                    Icon(idiom: .watch, size: 27.5, scale: 2, filename: name),
+                    Icon(idiom: .watch, size: 29, scale: 2, filename: name),
+                    Icon(idiom: .watch, size: 29, scale: 3, filename: name),
+                    Icon(idiom: .watch, size: 40, scale: 2, filename: name),
+                    Icon(idiom: .watch, size: 44, scale: 2, filename: name),
+                    Icon(idiom: .watch, size: 86, scale: 2, filename: name),
+                    Icon(idiom: .watch, size: 98, scale: 2, filename: name)]
+        case .watchMarketing:
+            return [Icon(idiom: .watchMarketing, size: 1024, scale: 1, filename: name)]
         }
     }
 }

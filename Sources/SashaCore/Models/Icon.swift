@@ -22,6 +22,7 @@ final class Icon {
         self.idiom = idiom
         self.size = size
         self.scale = scale
-        self.filename = filename + "-\(size)x\(size)@\(scale)x.png"
+        let sizeString = String(format: "%.0f", size)
+        self.filename = filename + "-\(sizeString)x\(sizeString)@\(scale)x.png"
     }
 }

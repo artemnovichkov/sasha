@@ -20,25 +20,27 @@ public final class Sasha {
     }
     
     public func run() throws {
-        guard arguments.count > 1 else {
-            throw Error.missingProjectName
-        }
-        let projectName = arguments[1]
-        
-        do {
-            let projectFile = try fileSystem.currentFolder.file(named: "project.sasha")
-            let projectString = try projectFile.readAsString()
-            
-            let paths = folderService.paths(fromString: projectString)
-            try paths.forEach { path in
-                let finalPath = projectName + FolderService.Keys.slash + path
-                try fileSystem.createFolder(at: finalPath)
-            }
-            print("✅ Project \(projectName) was successfully added.")
-        }
-        catch {
-            throw Error.main
-        }
+        let iconService = IconService()
+        try! iconService.generateIcons(for: URL(fileURLWithPath: "/Users/artemnovichkov/Library/Developer/Xcode/DerivedData/Sasha-hasywgxoyhtmrwcgkrbczvzshcbj/Build/Products/Debug/logo.png"))
+//        guard arguments.count > 1 else {
+//            throw Error.missingProjectName
+//        }
+//        let projectName = arguments[1]
+//
+//        do {
+//            let projectFile = try fileSystem.currentFolder.file(named: "project.sasha")
+//            let projectString = try projectFile.readAsString()
+//
+//            let paths = folderService.paths(fromString: projectString)
+//            try paths.forEach { path in
+//                let finalPath = projectName + FolderService.Keys.slash + path
+//                try fileSystem.createFolder(at: finalPath)
+//            }
+//            print("✅ Project \(projectName) was successfully added.")
+//        }
+//        catch {
+//            throw Error.main
+//        }
     }
 }
 

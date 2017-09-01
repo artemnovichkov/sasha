@@ -13,18 +13,30 @@ final class Icon: Codable {
         case iphone, ipad, iosMarketing = "ios-marketing", car, mac, watch, watchMarketing = "watch-marketing"
     }
     
-    let idiom: Idiom
-    let size: Float
-    let scale: Float
-    let filename: String
+    enum Role: String, Codable {
+        case notificationCenter, companionSettings, appLauncher, longLook, quickLook
+    }
     
-    init(idiom: Idiom, size: Float, scale: Float, filename: String) {
-        self.idiom = idiom
+    enum Subtype: String, Codable {
+        case mm38, mm42
+    }
+    
+    let size: Float
+    let idiom: Idiom
+    let filename: String
+    let scale: Float
+    let role: Role?
+    let subtype: Subtype?
+    
+    init(size: Float, idiom: Idiom, filename: String, scale: Float, role: Role? = nil, subtype: Subtype? = nil) {
         self.size = size
-        self.scale = scale
+        self.idiom = idiom
         let sizeString = String(format: "%g", size)
         let scaleString = String(format: "%g", scale)
         self.filename = filename + "-\(sizeString)x\(sizeString)@\(scaleString)x.png"
+        self.scale = scale
+        self.role = role
+        self.subtype = subtype
     }
     
     func encode(to encoder: Encoder) throws {

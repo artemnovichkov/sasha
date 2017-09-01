@@ -20,54 +20,54 @@ final class IconSetFactory {
     private func makeIcons(forName name: String, idiom: Icon.Idiom) -> [Icon] {
         switch idiom {
         case .iphone:
-            return [Icon(idiom: .iphone, size: 20, scale: 2, filename: name),
-                    Icon(idiom: .iphone, size: 20, scale: 3, filename: name),
-                    Icon(idiom: .iphone, size: 29, scale: 1, filename: name),
-                    Icon(idiom: .iphone, size: 29, scale: 2, filename: name),
-                    Icon(idiom: .iphone, size: 29, scale: 3, filename: name),
-                    Icon(idiom: .iphone, size: 40, scale: 2, filename: name),
-                    Icon(idiom: .iphone, size: 40, scale: 3, filename: name),
-                    Icon(idiom: .iphone, size: 57, scale: 1, filename: name),
-                    Icon(idiom: .iphone, size: 57, scale: 2, filename: name),
-                    Icon(idiom: .iphone, size: 60, scale: 2, filename: name),
-                    Icon(idiom: .iphone, size: 60, scale: 3, filename: name)]
+            return [Icon(size: 20, idiom: .iphone, filename: name, scale: 2),
+                    Icon(size: 20, idiom: .iphone, filename: name, scale: 3),
+                    Icon(size: 29, idiom: .iphone, filename: name, scale: 1),
+                    Icon(size: 29, idiom: .iphone, filename: name, scale: 2),
+                    Icon(size: 29, idiom: .iphone, filename: name, scale: 3),
+                    Icon(size: 40, idiom: .iphone, filename: name, scale: 2),
+                    Icon(size: 40, idiom: .iphone, filename: name, scale: 3),
+                    Icon(size: 57, idiom: .iphone, filename: name, scale: 1),
+                    Icon(size: 57, idiom: .iphone, filename: name, scale: 2),
+                    Icon(size: 60, idiom: .iphone, filename: name, scale: 2),
+                    Icon(size: 60, idiom: .iphone, filename: name, scale: 3)]
         case .ipad:
-            return [Icon(idiom: .ipad, size: 20, scale: 1, filename: name),
-                    Icon(idiom: .ipad, size: 20, scale: 2, filename: name),
-                    Icon(idiom: .ipad, size: 29, scale: 1, filename: name),
-                    Icon(idiom: .ipad, size: 29, scale: 2, filename: name),
-                    Icon(idiom: .ipad, size: 40, scale: 1, filename: name),
-                    Icon(idiom: .ipad, size: 40, scale: 2, filename: name),
-                    Icon(idiom: .ipad, size: 76, scale: 1, filename: name),
-                    Icon(idiom: .ipad, size: 76, scale: 2, filename: name),
-                    Icon(idiom: .ipad, size: 83.5, scale: 2, filename: name)]
+            return [Icon(size: 20, idiom: .ipad, filename: name, scale: 1),
+                    Icon(size: 20, idiom: .ipad, filename: name, scale: 2),
+                    Icon(size: 29, idiom: .ipad, filename: name, scale: 1),
+                    Icon(size: 29, idiom: .ipad, filename: name, scale: 2),
+                    Icon(size: 40, idiom: .ipad, filename: name, scale: 1),
+                    Icon(size: 40, idiom: .ipad, filename: name, scale: 2),
+                    Icon(size: 76, idiom: .ipad, filename: name, scale: 1),
+                    Icon(size: 76, idiom: .ipad, filename: name, scale: 2),
+                    Icon(size: 83.5, idiom: .ipad, filename: name, scale: 2)]
         case .iosMarketing:
-            return [Icon(idiom: .iosMarketing, size: 1024, scale: 1, filename: name)]
+            return [Icon(size: 1024, idiom: .iosMarketing, filename: name, scale: 1)]
         case .car:
-            return [Icon(idiom: .car, size: 60, scale: 2, filename: name),
-                    Icon(idiom: .car, size: 60, scale: 3, filename: name)]
+            return [Icon(size: 60, idiom: .car, filename: name, scale: 2),
+                    Icon(size: 60, idiom: .car, filename: name, scale: 3)]
         case .mac:
-            return [Icon(idiom: .mac, size: 16, scale: 1, filename: name),
-                    Icon(idiom: .mac, size: 16, scale: 2, filename: name),
-                    Icon(idiom: .mac, size: 32, scale: 1, filename: name),
-                    Icon(idiom: .mac, size: 32, scale: 2, filename: name),
-                    Icon(idiom: .mac, size: 128, scale: 1, filename: name),
-                    Icon(idiom: .mac, size: 128, scale: 2, filename: name),
-                    Icon(idiom: .mac, size: 256, scale: 1, filename: name),
-                    Icon(idiom: .mac, size: 256, scale: 2, filename: name),
-                    Icon(idiom: .mac, size: 512, scale: 1, filename: name),
-                    Icon(idiom: .mac, size: 512, scale: 2, filename: name)]
+            return [Icon(size: 16, idiom: .mac, filename: name, scale: 1),
+                    Icon(size: 16, idiom: .mac, filename: name, scale: 2),
+                    Icon(size: 32, idiom: .mac, filename: name, scale: 1),
+                    Icon(size: 32, idiom: .mac, filename: name, scale: 2),
+                    Icon(size: 128, idiom: .mac, filename: name, scale: 1),
+                    Icon(size: 128, idiom: .mac, filename: name, scale: 2),
+                    Icon(size: 256, idiom: .mac, filename: name, scale: 1),
+                    Icon(size: 256, idiom: .mac, filename: name, scale: 2),
+                    Icon(size: 512, idiom: .mac, filename: name, scale: 1),
+                    Icon(size: 512, idiom: .mac, filename: name, scale: 2)]
         case .watch:
-            return [Icon(idiom: .watch, size: 24, scale: 2, filename: name),
-                    Icon(idiom: .watch, size: 27.5, scale: 2, filename: name),
-                    Icon(idiom: .watch, size: 29, scale: 2, filename: name),
-                    Icon(idiom: .watch, size: 29, scale: 3, filename: name),
-                    Icon(idiom: .watch, size: 40, scale: 2, filename: name),
-                    Icon(idiom: .watch, size: 44, scale: 2, filename: name),
-                    Icon(idiom: .watch, size: 86, scale: 2, filename: name),
-                    Icon(idiom: .watch, size: 98, scale: 2, filename: name)]
+            return [Icon(size: 24, idiom: .watch, filename: name, scale: 2, role: .notificationCenter, subtype: .mm38),
+                    Icon(size: 27.5, idiom: .watch, filename: name, scale: 2, role: .notificationCenter, subtype: .mm42),
+                    Icon(size: 29, idiom: .watch, filename: name, scale: 2, role: .companionSettings),
+                    Icon(size: 29, idiom: .watch, filename: name, scale: 3, role: .companionSettings),
+                    Icon(size: 40, idiom: .watch, filename: name, scale: 2, role: .appLauncher),
+                    Icon(size: 44, idiom: .watch, filename: name, scale: 2, role: .longLook),
+                    Icon(size: 86, idiom: .watch, filename: name, scale: 2, role: .quickLook),
+                    Icon(size: 98, idiom: .watch, filename: name, scale: 2, role: .quickLook)]
         case .watchMarketing:
-            return [Icon(idiom: .watchMarketing, size: 1024, scale: 1, filename: name)]
+            return [Icon(size: 1024, idiom: .watchMarketing, filename: name, scale: 1)]
         }
     }
 }

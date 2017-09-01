@@ -52,7 +52,8 @@ final class IconService {
         let context = CIContext(options: [kCIContextUseSoftwareRenderer: false])
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         
-        try iconSetFactory.makeIconSet().images.forEach { icon in
+        let iconSet = iconSetFactory.makeIconSet()
+        try iconSet.images.forEach { icon in
             let scale = icon.size * icon.scale / width
             filter.setValue(scale, forKey: kCIInputScaleKey)
             guard let outputImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else {
@@ -68,6 +69,11 @@ final class IconService {
             let filename = Keys.iconName + "-\(sizeString)x\(sizeString)@\(scaleString)x.png"
             let file = try fileSystem.createFile(at: Keys.iconSetName + "/" + filename)
             try file.write(data: outputData)
+            
+            let encoder = JSONEncoder()
+            let iconSetData = try encoder.encode(iconSet)
+            let contentsFile = try fileSystem.createFile(at: Keys.iconSetName + "/" + "Content.json")
+            try contentsFile.write(data: iconSetData)
         }
     }
 }

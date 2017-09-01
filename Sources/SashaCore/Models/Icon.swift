@@ -7,9 +7,9 @@
 
 import Foundation
 
-final class Icon {
+final class Icon: Codable {
     
-    enum Idiom {
+    enum Idiom: String, Codable {
         case iphone, ipad, iosMarketing
     }
     

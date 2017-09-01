@@ -7,9 +7,9 @@
 
 import Foundation
 
-final class IconSet {
+final class IconSet: Codable {
     
-    final class Info {
+    final class Info: Codable {
         
         let version: Int
         let author: String

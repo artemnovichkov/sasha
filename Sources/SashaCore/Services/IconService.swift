@@ -27,11 +27,14 @@ final class IconService {
     
     private let iconSetFactory: IconSetFactory
     private let fileSystem: FileSystem
+    private let encoder: JSONEncoder
     
     init(iconSetFactory: IconSetFactory = IconSetFactory(),
-         fileSystem: FileSystem = FileSystem()) {
+         fileSystem: FileSystem = FileSystem(),
+         encoder: JSONEncoder = JSONEncoder()) {
         self.iconSetFactory = iconSetFactory
         self.fileSystem = fileSystem
+        self.encoder = encoder
     }
     
     func generateIcons(for imageURL: URL) throws {
@@ -67,13 +70,15 @@ final class IconService {
             
             let file = try fileSystem.createFile(at: Keys.iconSetName + "/" + icon.filename)
             try file.write(data: outputData)
-            
-            let encoder = JSONEncoder()
-            encoder.outputFormatting = .prettyPrinted
-            let iconSetData = try encoder.encode(iconSet)
-            let contentsFile = try fileSystem.createFile(at: Keys.iconSetName + "/" + "Contents.json")
-            try contentsFile.write(data: iconSetData)
+            try write(iconSet)
         }
+    }
+    
+    private func write(_ set: IconSet) throws {
+        encoder.outputFormatting = .prettyPrinted
+        let iconSetData = try encoder.encode(set)
+        let contentsFile = try fileSystem.createFile(at: Keys.iconSetName + "/" + "Contents.json")
+        try contentsFile.write(data: iconSetData)
     }
 }
 

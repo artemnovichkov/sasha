@@ -26,7 +26,7 @@ public final class Sasha {
         let projectName = arguments[1]
         
         do {
-            let projectFile = try fileSystem.currentFolder.file(named: "project.sasha")
+            let projectFile = try File(path: "/usr/local/bin/project.sasha")
             let projectString = try projectFile.readAsString()
             
             let paths = folderService.paths(fromString: projectString)

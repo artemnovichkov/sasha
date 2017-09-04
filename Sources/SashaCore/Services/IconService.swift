@@ -11,10 +11,10 @@ import Files
 final class IconService {
     
     enum Error: Swift.Error {
-        case cantCreateImage
-        case cantGetSize
-        case wrongSize
-        case cantRenderImage
+        case imageCreationFailed
+        case sizeReadingFailed
+        case wrongSizeDetected
+        case imageRenderingFailed
     }
     
     private enum Keys {
@@ -40,6 +40,10 @@ final class IconService {
         self.encoder = encoder
     }
     
+    /// Generates icons for iOS platform.
+    ///
+    /// - Parameter imageURL: The url for original image.
+    /// - Throws: `IconService.Error` errors.
     func generateIcons(for imageURL: URL) throws {
         let image = try self.image(for: imageURL)
         let iconSet = iconFactory.makeSet(withName: Keys.iconName,
@@ -48,25 +52,38 @@ final class IconService {
         try writeContents(of: iconSet)
     }
     
+    /// Generates icons for Android platform.
+    ///
+    /// - Parameter imageURL: The url for original image.
+    /// - Throws: `IconService.Error` errors.
     func generateAndroidIcons(for imageURL: URL) throws {
         let image = try self.image(for: imageURL)
-        try generateIcons(from: image, icons: iconFactory.makeAndroidIcons(), folderName: Keys.androidIconFolder)
+        try generateIcons(from: image,
+                          icons: iconFactory.makeAndroidIcons(),
+                          folderName: Keys.androidIconFolder)
     }
     
     private func image(for imageURL: URL) throws -> CIImage {
         guard let image = CIImage(contentsOf: imageURL) else {
-            throw Error.cantCreateImage
+            throw Error.imageCreationFailed
         }
         guard let width = image.properties[Keys.width] as? Float,
             let height = image.properties[Keys.height] as? Float else {
-                throw Error.cantGetSize
+                throw Error.sizeReadingFailed
         }
         guard width == 1024, height == 1024 else {
-            throw Error.wrongSize
+            throw Error.wrongSizeDetected
         }
         return image
     }
     
+    /// Generates icons from original image. The image is resized and written to image files.
+    ///
+    /// - Parameters:
+    ///   - image: The original image.
+    ///   - icons: The array of objects, that represent icon information.
+    ///   - folderName: The name of folder for generated icons.
+    /// - Throws: `IconService.Error` errors.
     private func generateIcons(from image: CIImage, icons: [IconRepresentable], folderName: String) throws {
         let filter = CIFilter(name: Keys.lanczosFilterName)!
         filter.setValue(image, forKey: kCIInputImageKey)
@@ -79,11 +96,11 @@ final class IconService {
             let scale = icon.iconSize() / 1024
             filter.setValue(scale, forKey: kCIInputScaleKey)
             guard let outputImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else {
-                throw Error.cantRenderImage
+                throw Error.imageRenderingFailed
             }
             guard let outputData = context.jpegRepresentation(of: outputImage, colorSpace: colorSpace, options: [:]) else {
                 try fileSystem.currentFolder.subfolder(named: folderName).delete()
-                throw Error.cantRenderImage
+                throw Error.imageRenderingFailed
             }
             
             let path = [folderName, icon.iconName()].joined(separator: "/")
@@ -92,6 +109,10 @@ final class IconService {
         }
     }
     
+    /// Writes `Contents.json` file that contains names of icons.
+    ///
+    /// - Parameter set: The set with icons.
+    /// - Throws: `File.Error.writeFailed` if the file couldn’t be written to.
     private func writeContents(of set: IconSet) throws {
         encoder.outputFormatting = .prettyPrinted
         let iconSetData = try encoder.encode(set)
@@ -104,10 +125,10 @@ extension IconService.Error: LocalizedError {
     
     var errorDescription: String? {
         switch self {
-        case .cantCreateImage: return "Can't create an image."
-        case .cantGetSize: return "Can't get image size."
-        case .wrongSize: return "Image has wrong size."
-        case .cantRenderImage: return "Can't render the image."
+        case .imageCreationFailed: return "Can't create an image."
+        case .sizeReadingFailed: return "Can't get image size."
+        case .wrongSizeDetected: return "Image has wrong size."
+        case .imageRenderingFailed: return "Can't render the image."
         }
     }
 }

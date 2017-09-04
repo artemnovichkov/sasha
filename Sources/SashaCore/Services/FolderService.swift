@@ -32,6 +32,10 @@ final class FolderService {
         }
     }
     
+    /// Generates the paths for project folders from configuration string.
+    ///
+    /// - Parameter string: The string from `sasha.project` file.
+    /// - Returns: The array of full paths.
     func paths(fromString string: String) -> [String] {
         let components = string.components(separatedBy: "\n")
         let allFolders = components.map { component -> Folder in

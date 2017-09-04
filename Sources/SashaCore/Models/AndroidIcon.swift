@@ -14,3 +14,14 @@ final class AndroidIcon {
         self.name = name
     }
 }
+
+extension AndroidIcon: IconRepresentable {
+    
+    func iconSize() -> Float {
+        return size
+    }
+    
+    func iconName() -> String {
+        return name
+    }
+}

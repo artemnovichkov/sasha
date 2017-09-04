@@ -113,6 +113,31 @@ final class IconService {
         }
     }
     
+    func generate(_ icons: [IconRepresentable], folderName: String) throws {
+//        let filter = CIFilter(name: Keys.lanczosFilterName)!
+//        filter.setValue(image, forKey: kCIInputImageKey)
+//        filter.setValue(1, forKey: kCIInputAspectRatioKey)
+//        
+//        let context = CIContext(options: [kCIContextUseSoftwareRenderer: false])
+//        let colorSpace = CGColorSpaceCreateDeviceRGB()
+//        
+//        try icons.forEach { icon in
+//            let scale = icon.size() / width
+//            filter.setValue(scale, forKey: kCIInputScaleKey)
+//            guard let outputImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else {
+//                throw Error.cantRenderImage
+//            }
+//            guard let outputData = context.jpegRepresentation(of: outputImage, colorSpace: colorSpace, options: [:]) else {
+//                try fileSystem.currentFolder.subfolder(named: Keys.androidIconFolder).delete()
+//                throw Error.cantRenderImage
+//            }
+//            
+//            let path = [Keys.androidIconFolder, icon.name()].joined(separator: "/")
+//            let file = try fileSystem.createFile(at: path)
+//            try file.write(data: outputData)
+//        }
+    }
+    
     private func writeContents(of set: IconSet) throws {
         encoder.outputFormatting = .prettyPrinted
         let iconSetData = try encoder.encode(set)

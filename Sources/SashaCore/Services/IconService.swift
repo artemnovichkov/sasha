@@ -28,14 +28,14 @@ final class IconService {
         static let androidIconName = "ic_launcher.png"
     }
     
-    private let iconSetFactory: IconSetFactory
+    private let iconFactory: IconFactory
     private let fileSystem: FileSystem
     private let encoder: JSONEncoder
     
-    init(iconSetFactory: IconSetFactory = IconSetFactory(),
+    init(iconFactory: IconFactory = IconFactory(),
          fileSystem: FileSystem = FileSystem(),
          encoder: JSONEncoder = JSONEncoder()) {
-        self.iconSetFactory = iconSetFactory
+        self.iconFactory = iconFactory
         self.fileSystem = fileSystem
         self.encoder = encoder
     }
@@ -58,7 +58,7 @@ final class IconService {
         let context = CIContext(options: [kCIContextUseSoftwareRenderer: false])
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         
-        let iconSet = iconSetFactory.makeSet(withName: Keys.iconName,
+        let iconSet = iconFactory.makeSet(withName: Keys.iconName,
                                              idioms: [.iphone, .ipad, .iosMarketing])
         try iconSet.images.forEach { icon in
             let scale = icon.size * icon.scale / width
@@ -96,7 +96,7 @@ final class IconService {
         let context = CIContext(options: [kCIContextUseSoftwareRenderer: false])
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         
-        try iconSetFactory.makeAndroidIcons().forEach { icon in
+        try iconFactory.makeAndroidIcons().forEach { icon in
             let scale = icon.size / width
             filter.setValue(scale, forKey: kCIInputScaleKey)
             guard let outputImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else {

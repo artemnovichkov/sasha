@@ -1,5 +1,5 @@
 //
-//  IconSetFactory.swift
+//  IconFactory.swift
 //  Files
 //
 //  Created by Artem Novichkov on 01/09/2017.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class IconSetFactory {
+final class IconFactory {
     
     func makeSet(withName name: String, idioms: [Icon.Idiom]) -> IconSet {
         var images = [Icon]()

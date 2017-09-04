@@ -22,8 +22,8 @@ public final class Sasha {
     public func run() throws {
         let iconService = IconService()
         let url = URL(fileURLWithPath: "/Users/artemnovichkov/Library/Developer/Xcode/DerivedData/Sasha-hasywgxoyhtmrwcgkrbczvzshcbj/Build/Products/Debug/logo.png")
-        try! iconService.generateIcons(for: url)
-        try! iconService.generateAndroidIcons(for: url)
+        try iconService.generateIcons(for: url)
+        try iconService.generateAndroidIcons(for: url)
 //        guard arguments.count > 1 else {
 //            throw Error.missingProjectName
 //        }

@@ -41,44 +41,19 @@ final class IconService {
     }
     
     func generateIcons(for imageURL: URL) throws {
-        guard let image = CIImage(contentsOf: imageURL) else {
-            throw Error.cantCreateImage
-        }
-        guard let width = image.properties[Keys.width] as? Float,
-            let height = image.properties[Keys.height] as? Float else {
-                throw Error.cantGetSize
-        }
-        guard width == 1024, height == 1024 else {
-            throw Error.wrongSize
-        }
-        let filter = CIFilter(name: Keys.lanczosFilterName)!
-        filter.setValue(image, forKey: kCIInputImageKey)
-        filter.setValue(1, forKey: kCIInputAspectRatioKey)
-        
-        let context = CIContext(options: [kCIContextUseSoftwareRenderer: false])
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        
+        let image = try self.image(for: imageURL)
         let iconSet = iconFactory.makeSet(withName: Keys.iconName,
-                                             idioms: [.iphone, .ipad, .iosMarketing])
-        try iconSet.images.forEach { icon in
-            let scale = icon.size * icon.scale / width
-            filter.setValue(scale, forKey: kCIInputScaleKey)
-            guard let outputImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else {
-                throw Error.cantRenderImage
-            }
-            guard let outputData = context.jpegRepresentation(of: outputImage, colorSpace: colorSpace, options: [:]) else {
-                try fileSystem.currentFolder.subfolder(named: Keys.iconSetName).delete()
-                throw Error.cantRenderImage
-            }
-            
-            let path = [Keys.iconSetName, icon.filename].joined(separator: "/")
-            let file = try fileSystem.createFile(at: path)
-            try file.write(data: outputData)
-        }
+                                          idioms: [.iphone, .ipad, .iosMarketing])
+        try generateIcons(from: image, icons: iconSet.images, folderName: Keys.iconSetName)
         try writeContents(of: iconSet)
     }
     
     func generateAndroidIcons(for imageURL: URL) throws {
+        let image = try self.image(for: imageURL)
+        try generateIcons(from: image, icons: iconFactory.makeAndroidIcons(), folderName: Keys.androidIconFolder)
+    }
+    
+    private func image(for imageURL: URL) throws -> CIImage {
         guard let image = CIImage(contentsOf: imageURL) else {
             throw Error.cantCreateImage
         }
@@ -89,6 +64,10 @@ final class IconService {
         guard width == 1024, height == 1024 else {
             throw Error.wrongSize
         }
+        return image
+    }
+    
+    private func generateIcons(from image: CIImage, icons: [IconRepresentable], folderName: String) throws {
         let filter = CIFilter(name: Keys.lanczosFilterName)!
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(1, forKey: kCIInputAspectRatioKey)
@@ -96,46 +75,21 @@ final class IconService {
         let context = CIContext(options: [kCIContextUseSoftwareRenderer: false])
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         
-        try iconFactory.makeAndroidIcons().forEach { icon in
-            let scale = icon.size / width
+        try icons.forEach { icon in
+            let scale = icon.iconSize() / 1024
             filter.setValue(scale, forKey: kCIInputScaleKey)
             guard let outputImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else {
                 throw Error.cantRenderImage
             }
             guard let outputData = context.jpegRepresentation(of: outputImage, colorSpace: colorSpace, options: [:]) else {
-                try fileSystem.currentFolder.subfolder(named: Keys.androidIconFolder).delete()
+                try fileSystem.currentFolder.subfolder(named: folderName).delete()
                 throw Error.cantRenderImage
             }
             
-            let path = [Keys.androidIconFolder, icon.name].joined(separator: "/")
+            let path = [folderName, icon.iconName()].joined(separator: "/")
             let file = try fileSystem.createFile(at: path)
             try file.write(data: outputData)
         }
-    }
-    
-    func generate(_ icons: [IconRepresentable], folderName: String) throws {
-//        let filter = CIFilter(name: Keys.lanczosFilterName)!
-//        filter.setValue(image, forKey: kCIInputImageKey)
-//        filter.setValue(1, forKey: kCIInputAspectRatioKey)
-//        
-//        let context = CIContext(options: [kCIContextUseSoftwareRenderer: false])
-//        let colorSpace = CGColorSpaceCreateDeviceRGB()
-//        
-//        try icons.forEach { icon in
-//            let scale = icon.size() / width
-//            filter.setValue(scale, forKey: kCIInputScaleKey)
-//            guard let outputImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else {
-//                throw Error.cantRenderImage
-//            }
-//            guard let outputData = context.jpegRepresentation(of: outputImage, colorSpace: colorSpace, options: [:]) else {
-//                try fileSystem.currentFolder.subfolder(named: Keys.androidIconFolder).delete()
-//                throw Error.cantRenderImage
-//            }
-//            
-//            let path = [Keys.androidIconFolder, icon.name()].joined(separator: "/")
-//            let file = try fileSystem.createFile(at: path)
-//            try file.write(data: outputData)
-//        }
     }
     
     private func writeContents(of set: IconSet) throws {

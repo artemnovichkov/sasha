@@ -70,4 +70,14 @@ final class IconSetFactory {
             return [Icon(size: 1024, idiom: .watchMarketing, filename: name, scale: 1)]
         }
     }
+    
+    func makeAndroidIcons() -> [AndroidIcon] {
+        return [AndroidIcon(size: 72, name: "mipmap-hdpi/ic_launcher.png"),
+                AndroidIcon(size: 36, name: "mipmap-ldpi/ic_launcher.png"),
+                AndroidIcon(size: 48, name: "mipmap-mdpi/ic_launcher.png"),
+                AndroidIcon(size: 96, name: "mipmap-xhdpi/ic_launcher.png"),
+                AndroidIcon(size: 144, name: "mipmap-xxhdpi/ic_launcher.png"),
+                AndroidIcon(size: 192, name: "mipmap-xxxhdpi/ic_launcher.png"),
+                AndroidIcon(size: 512, name: "playstore-icon.png")]
+    }
 }

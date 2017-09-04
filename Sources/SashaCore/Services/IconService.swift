@@ -23,6 +23,9 @@ final class IconService {
         static let lanczosFilterName = "CILanczosScaleTransform"
         static let iconName = "Icon-App"
         static let iconSetName = "AppIcon.appiconset"
+        static let contentsName = "Contents.json"
+        static let androidIconFolder = "android"
+        static let androidIconName = "ic_launcher.png"
     }
     
     private let iconSetFactory: IconSetFactory
@@ -68,16 +71,52 @@ final class IconService {
                 throw Error.cantRenderImage
             }
             
-            let file = try fileSystem.createFile(at: Keys.iconSetName + "/" + icon.filename)
+            let path = [Keys.iconSetName, icon.filename].joined(separator: "/")
+            let file = try fileSystem.createFile(at: path)
             try file.write(data: outputData)
-            try write(iconSet)
+        }
+        try writeContents(of: iconSet)
+    }
+    
+    func generateAndroidIcons(for imageURL: URL) throws {
+        guard let image = CIImage(contentsOf: imageURL) else {
+            throw Error.cantCreateImage
+        }
+        guard let width = image.properties[Keys.width] as? Float,
+            let height = image.properties[Keys.height] as? Float else {
+                throw Error.cantGetSize
+        }
+        guard width == 1024, height == 1024 else {
+            throw Error.wrongSize
+        }
+        let filter = CIFilter(name: Keys.lanczosFilterName)!
+        filter.setValue(image, forKey: kCIInputImageKey)
+        filter.setValue(1, forKey: kCIInputAspectRatioKey)
+        
+        let context = CIContext(options: [kCIContextUseSoftwareRenderer: false])
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        
+        try iconSetFactory.makeAndroidIcons().forEach { icon in
+            let scale = icon.size / width
+            filter.setValue(scale, forKey: kCIInputScaleKey)
+            guard let outputImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else {
+                throw Error.cantRenderImage
+            }
+            guard let outputData = context.jpegRepresentation(of: outputImage, colorSpace: colorSpace, options: [:]) else {
+                try fileSystem.currentFolder.subfolder(named: Keys.androidIconFolder).delete()
+                throw Error.cantRenderImage
+            }
+            
+            let path = [Keys.androidIconFolder, icon.name].joined(separator: "/")
+            let file = try fileSystem.createFile(at: path)
+            try file.write(data: outputData)
         }
     }
     
-    private func write(_ set: IconSet) throws {
+    private func writeContents(of set: IconSet) throws {
         encoder.outputFormatting = .prettyPrinted
         let iconSetData = try encoder.encode(set)
-        let contentsFile = try fileSystem.createFile(at: Keys.iconSetName + "/" + "Contents.json")
+        let contentsFile = try fileSystem.createFile(at: Keys.iconSetName + "/" + Keys.contentsName)
         try contentsFile.write(data: iconSetData)
     }
 }

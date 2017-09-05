@@ -6,58 +6,20 @@
 //
 //
 
-import Foundation
-import Files
-
 public final class Sasha {
     
     private let arguments: [String]
-//    private let folderService = FolderService()
-    private let fileSystem = FileSystem()
     
     public init(arguments: [String] = CommandLine.arguments) {
         self.arguments = arguments
     }
     
     public func run() throws {
-        let command = Command(rawValue: arguments[1])
-        print(command)
-//        guard arguments.count > 1 else {
-//            throw Error.missingProjectName
-//        }
-//        let projectName = arguments[1]
-//
-//        do {
-//            let projectFile = try File(path: "/usr/local/bin/project.sasha")
-//            let projectString = try projectFile.readAsString()
-//
-//            let paths = folderService.paths(fromString: projectString)
-//            try paths.forEach { path in
-//                let finalPath = projectName + FolderService.Keys.slash + path
-//                try fileSystem.createFolder(at: finalPath)
-//            }
-//            print("✅ Project \(projectName) was successfully added.")
-//        }
-//        catch {
-//            throw Error.main
-//        }
-    }
-}
-
-public extension Sasha {
-    
-    enum Error: Swift.Error {
-        case main
-        case missingProjectName
-    }
-}
-
-extension Sasha.Error: LocalizedError {
-    
-    public var errorDescription: String? {
-        switch self {
-        case .main: return "Project creation error. Please check that project.sasha file exists and has correct structure"
-        case .missingProjectName: return "Can't find project name. Please add it as parameter, for example: sasha ProjectName"
+        if let command = Command(rawValue: arguments[1]) {
+            try command.task.run()
+        }
+        else {
+            print("wrong command")
         }
     }
 }

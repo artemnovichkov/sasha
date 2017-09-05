@@ -19,7 +19,7 @@ final class ProjectTask: Executable {
     
     func run() throws {
         let projectName = ask("Enter project name:") { settings in
-            settings.addInvalidCase("Project name should be non-empty", invalidIfTrue: { string in return string.count > 0 })
+            settings.addInvalidCase("Project name should be non-empty", invalidIfTrue: { $0.count > 0 })
         }
         do {
             let projectFile = try File(path: "/usr/local/bin/project.sasha")
@@ -30,7 +30,7 @@ final class ProjectTask: Executable {
                 let finalPath = projectName + FolderService.Keys.slash + path
                 try fileSystem.createFolder(at: finalPath)
             }
-            print("✅ Project \(projectName) was successfully added.")
+            print("🎉 Project \(projectName) was successfully created.")
         }
         catch {
             throw Error.main
@@ -42,7 +42,6 @@ extension ProjectTask {
     
     enum Error: Swift.Error {
         case main
-        case missingProjectName
     }
 }
 
@@ -51,7 +50,6 @@ extension ProjectTask.Error: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .main: return "Project creation error. Please check that project.sasha file exists and has correct structure"
-        case .missingProjectName: return "Can't find project name. Please add it as parameter, for example: sasha ProjectName"
         }
     }
 }

@@ -10,7 +10,6 @@ enum Command: String {
         return [.project, .icons]
     }
     
-    
     var task: Executable {
         switch self {
         case .project:
@@ -24,7 +23,7 @@ enum Command: String {
         let prefix = "+ \(rawValue) \t"
         switch self {
         case .project:
-            return prefix + "Generates project folders tree according to project.sasha file."
+            return prefix + "Generates a project folders tree according to project.sasha file."
         case .icons:
             return prefix + "Generates an icon set for selected platform."
         }

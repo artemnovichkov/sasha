@@ -15,11 +15,12 @@ public final class Sasha {
     }
     
     public func run() throws {
+        if arguments.count <= 1 {
+            print(Command.usageDescription)
+            return
+        }
         if let command = Command(rawValue: arguments[1]) {
             try command.task.run()
-        }
-        else {
-            print("wrong command")
         }
     }
 }

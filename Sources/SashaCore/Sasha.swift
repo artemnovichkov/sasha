@@ -12,7 +12,7 @@ import Files
 public final class Sasha {
     
     private let arguments: [String]
-    private let folderService = FolderService()
+//    private let folderService = FolderService()
     private let fileSystem = FileSystem()
     
     public init(arguments: [String] = CommandLine.arguments) {
@@ -20,25 +20,27 @@ public final class Sasha {
     }
     
     public func run() throws {
-        guard arguments.count > 1 else {
-            throw Error.missingProjectName
-        }
-        let projectName = arguments[1]
-        
-        do {
-            let projectFile = try File(path: "/usr/local/bin/project.sasha")
-            let projectString = try projectFile.readAsString()
-            
-            let paths = folderService.paths(fromString: projectString)
-            try paths.forEach { path in
-                let finalPath = projectName + FolderService.Keys.slash + path
-                try fileSystem.createFolder(at: finalPath)
-            }
-            print("✅ Project \(projectName) was successfully added.")
-        }
-        catch {
-            throw Error.main
-        }
+        let command = Command(rawValue: arguments[1])
+        print(command)
+//        guard arguments.count > 1 else {
+//            throw Error.missingProjectName
+//        }
+//        let projectName = arguments[1]
+//
+//        do {
+//            let projectFile = try File(path: "/usr/local/bin/project.sasha")
+//            let projectString = try projectFile.readAsString()
+//
+//            let paths = folderService.paths(fromString: projectString)
+//            try paths.forEach { path in
+//                let finalPath = projectName + FolderService.Keys.slash + path
+//                try fileSystem.createFolder(at: finalPath)
+//            }
+//            print("✅ Project \(projectName) was successfully added.")
+//        }
+//        catch {
+//            throw Error.main
+//        }
     }
 }
 

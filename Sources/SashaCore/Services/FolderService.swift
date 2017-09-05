@@ -1,8 +1,5 @@
 //
-//  FolderService.swift
-//  Files
-//
-//  Created by Artem Novichkov on 29/08/2017.
+//  Copyright © 2017 Artem Novichkov. All rights reserved.
 //
 
 import Foundation

@@ -1,10 +1,6 @@
 //
-//  IconService.swift
-//  Files
+//  Copyright © 2017 Artem Novichkov. All rights reserved.
 //
-//  Created by Artem Novichkov on 01/09/2017.
-//
-
 import CoreImage
 import Files
 

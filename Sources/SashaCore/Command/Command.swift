@@ -6,10 +6,6 @@ enum Command: String {
     case project
     case icons
     
-    static var all: [Command] {
-        return [.project, .icons]
-    }
-    
     var task: Executable {
         switch self {
         case .project:
@@ -27,6 +23,10 @@ enum Command: String {
         case .icons:
             return prefix + "Generates an icon set for selected platform."
         }
+    }
+    
+    static var all: [Command] {
+        return [.project, .icons]
     }
     
     static var usageDescription: String {

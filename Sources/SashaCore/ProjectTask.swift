@@ -18,8 +18,8 @@ final class ProjectTask: Executable {
     }
     
     func run() throws {
-        let projectName = ask("Enter project name:") { settings in
-            settings.addInvalidCase("Project name should be non-empty", invalidIfTrue: { $0.count > 0 })
+        let projectName = ask("Enter project name: ") { settings in
+            settings.addInvalidCase("Project name should be non-empty", invalidIfTrue: { $0.count == 0 })
         }
         do {
             let projectFile = try File(path: "/usr/local/bin/project.sasha")

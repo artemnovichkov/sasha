@@ -2,7 +2,7 @@
 //  Copyright © 2017 Rosberry. All rights reserved.
 //
 
-enum Command: String {
+enum Commands: String {
     case project
     case icons
     
@@ -25,7 +25,7 @@ enum Command: String {
         }
     }
     
-    static var all: [Command] {
+    static var all: [Commands] {
         return [.project, .icons]
     }
     
@@ -36,7 +36,7 @@ enum Command: String {
         $ sasha COMMAND
         
         Commands:
-        \(Command.all.reduce("") { $0 + "\n" + $1.description })
+        \(Commands.all.reduce("") { $0 + "\n" + $1.description })
         """
     }
 }

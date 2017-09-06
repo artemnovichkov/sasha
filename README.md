@@ -54,7 +54,7 @@ stuff
 -stocks
 -source
 ```
-To change it, open `/usr/local/bin/project.sasha` file in your favourite text editor and make custom project structure.
+To change it, open `~/.sasha/project.sasha` file in your favourite text editor and make custom project structure.
 
 ```bash
 $ sasha icons
@@ -78,7 +78,7 @@ $ git clone https://github.com/artemnovichkov/sasha.git
 $ cd sasha
 $ swift build -c release -Xswiftc -static-stdlib
 $ cp -f .build/release/sasha /usr/local/bin/sasha
-$ cp -f project.sasha /usr/local/bin
+$ cp -f project.sasha ~/.sasha
 ```
 ### Marathon
 

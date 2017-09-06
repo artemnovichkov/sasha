@@ -21,7 +21,7 @@ final class ProjectTask: Executable {
         let projectName = ask("Enter project name: ") { settings in
             settings.addInvalidCase("Project name should be non-empty", invalidIfTrue: { $0.count == 0 })
         }
-        let projectFile = try File(path: "/usr/local/bin/project.sasha")
+        let projectFile = try File(path: "~/.sasha/project.sasha")
         let projectString = try projectFile.readAsString()
         
         let paths = folderService.paths(fromString: projectString)

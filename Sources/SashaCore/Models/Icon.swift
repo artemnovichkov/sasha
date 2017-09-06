@@ -6,14 +6,17 @@ import Foundation
 
 final class Icon: Codable {
     
+    /// Idioms of icons.
     enum Idiom: String, Codable {
         case iphone, ipad, iosMarketing = "ios-marketing", car, mac, watch, watchMarketing = "watch-marketing"
     }
     
+    /// Roles of watchOS icons.
     enum Role: String, Codable {
         case notificationCenter, companionSettings, appLauncher, longLook, quickLook
     }
     
+    /// Subtypes of watchOS icons with `notificationCenter` role.
     enum Subtype: String, Codable {
         case mm38, mm42
     }

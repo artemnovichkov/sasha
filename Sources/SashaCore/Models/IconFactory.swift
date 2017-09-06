@@ -6,6 +6,12 @@ import Foundation
 
 final class IconFactory {
     
+    /// Makes a set of icons. The set contains an icons only for selected idioms.
+    ///
+    /// - Parameters:
+    ///   - name: The name of generated icons.
+    ///   - idioms: The idioms of icons.
+    /// - Returns: The set of icons.
     func makeSet(withName name: String, idioms: [Icon.Idiom]) -> IconSet {
         var images = [Icon]()
         idioms.forEach { idiom in
@@ -14,6 +20,12 @@ final class IconFactory {
         return IconSet(images: images)
     }
     
+    /// Makes a set of icons. The set contains an icons only for selected idiom.
+    ///
+    /// - Parameters:
+    ///   - name: The name of generated icons.
+    ///   - idiom: The idiom of icons.
+    /// - Returns: The array of generated icons.
     private func makeIcons(forName name: String, idiom: Icon.Idiom) -> [Icon] {
         switch idiom {
         case .iphone:
@@ -68,6 +80,9 @@ final class IconFactory {
         }
     }
     
+    /// Makes an array of icons for Android. The names of icons contain full paths including needed folders.
+    ///
+    /// - Returns: The array of icons.
     func makeAndroidIcons() -> [AndroidIcon] {
         return [AndroidIcon(size: 72, name: "mipmap-hdpi/ic_launcher.png"),
                 AndroidIcon(size: 36, name: "mipmap-ldpi/ic_launcher.png"),

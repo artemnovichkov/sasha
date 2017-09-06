@@ -78,7 +78,7 @@ $ git clone https://github.com/artemnovichkov/sasha.git
 $ cd sasha
 $ swift build -c release -Xswiftc -static-stdlib
 $ cp -f .build/release/sasha /usr/local/bin/sasha
-$ cp -f project.sasha ~/.sasha
+$ cp -r .sasha ~
 ```
 ### Marathon
 

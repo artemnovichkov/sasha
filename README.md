@@ -28,18 +28,18 @@ $ sasha project
 Sasha asks you new project name and generate folder tree. By default Sasha uses this project structure:
 
 ```
-UI
--iOS
+iOS
+-UI
 --old
 --png
--Android
+-UX
 --old
 --png
-UX
--iOS
+Android
+-UI
 --old
 --png
--Android
+-UX
 --old
 --png
 references

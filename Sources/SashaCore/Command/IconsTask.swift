@@ -9,7 +9,7 @@ import Files
 final class IconsTask: Executable {
     
     enum Platform: String {
-        case iOS, Android
+        case iOS, android
     }
     
     private let iconService: IconService
@@ -20,7 +20,7 @@ final class IconsTask: Executable {
     
     func run() throws {
         let platform = choose("Select a platform: ", type: Platform.self) { settings in
-            [Platform.iOS, Platform.Android].forEach { platform in
+            [Platform.iOS, Platform.android].forEach { platform in
                 settings.addChoice(platform.rawValue) { return platform }
             }
         }
@@ -35,7 +35,7 @@ final class IconsTask: Executable {
         case .iOS:
             try iconService.generateIcons(for: url)
             print("🎉 AppIcon.appiconset was successfully created")
-        case .Android:
+        case .android:
             try iconService.generateAndroidIcons(for: url)
             print("🎉 Icons were successfully created")
         }

@@ -131,7 +131,10 @@ extension IconService.Error: LocalizedError {
 
 extension CIContext {
     
-    func representation(of image: CIImage, format: CIFormat = kCIFormatRGBA8, colorSpace: CGColorSpace, options: [AnyHashable : Any] = [:]) -> Data? {
+    func representation(of image: CIImage,
+                        format: CIFormat = kCIFormatRGBA8,
+                        colorSpace: CGColorSpace,
+                        options: [AnyHashable : Any] = [:]) -> Data? {
         if #available(OSX 10.13, *) {
             return pngRepresentation(of: image, format: format, colorSpace: colorSpace)
         }

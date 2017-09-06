@@ -8,10 +8,6 @@ import Files
 
 final class IconsTask: Executable {
     
-    enum Platform: String {
-        case iOS, android
-    }
-    
     private let iconService: IconService
     
     init(iconService: IconService = IconService()) {
@@ -20,7 +16,7 @@ final class IconsTask: Executable {
     
     func run() throws {
         let platform = choose("Select a platform: ", type: Platform.self) { settings in
-            [Platform.iOS, Platform.android].forEach { platform in
+            Platform.all.forEach { platform in
                 settings.addChoice(platform.rawValue) { return platform }
             }
         }

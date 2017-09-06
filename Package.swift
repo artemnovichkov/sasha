@@ -10,9 +10,7 @@ let package = Package(
         Target(name: "SashaCore")
     ],
     dependencies: [
-        .Package(
-            url: "https://github.com/johnsundell/files.git",
-            majorVersion: 1
-        )
+        .Package(url: "https://github.com/johnsundell/files.git", majorVersion: 1),
+        .Package(url: "https://github.com/nsomar/Swiftline.git", majorVersion: 0)
     ]
 )

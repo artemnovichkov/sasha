@@ -15,7 +15,7 @@
 </p>
 Sasha is easy-to-use CLI app for routine designer tasks.
 
-##Features
+## Features
 - Project folder tree generation
 - iOS and Android icon slicing
 
@@ -86,7 +86,7 @@ $ cp -f project.sasha /usr/local/bin
 - Add Sasha to Marathon using `$ marathon add git@github.com:artemnovichkov/sasha.git`. Alternatively, add `git@github.com:artemnovichkov/sasha.git` to your `Marathonfile`.
 - Write your script, then run it using `$ marathon run <path-to-your-script>`.
 
-##TODO
+## TODO
  - [ ] Move `project.sasha` file to `.sasha`
  - [ ] Add Sketch templates
 

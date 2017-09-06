@@ -22,6 +22,7 @@ final class IconService {
         static let contentsName = "Contents.json"
         static let androidIconFolder = "android"
         static let androidIconName = "ic_launcher.png"
+        static let defaultSize: Float = 1024
     }
     
     private let iconFactory: IconFactory
@@ -67,7 +68,7 @@ final class IconService {
             let height = image.properties[Keys.height] as? Float else {
                 throw Error.sizeReadingFailed
         }
-        guard width == 1024, height == 1024 else {
+        guard width == Keys.defaultSize, height == Keys.defaultSize else {
             throw Error.wrongSizeDetected
         }
         return image
@@ -89,16 +90,15 @@ final class IconService {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         
         try icons.forEach { icon in
-            let scale = icon.iconSize() / 1024
+            let scale = icon.iconSize() / Keys.defaultSize
             filter.setValue(scale, forKey: kCIInputScaleKey)
             guard let outputImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else {
                 throw Error.imageRenderingFailed
             }
-            guard let outputData = context.jpegRepresentation(of: outputImage, colorSpace: colorSpace, options: [:]) else {
+            guard let outputData = context.representation(of: outputImage, colorSpace: colorSpace) else {
                 try fileSystem.currentFolder.subfolder(named: folderName).delete()
                 throw Error.imageRenderingFailed
             }
-            
             let path = [folderName, icon.iconName()].joined(separator: "/")
             let file = try fileSystem.createFile(at: path)
             try file.write(data: outputData)
@@ -126,5 +126,18 @@ extension IconService.Error: LocalizedError {
         case .wrongSizeDetected: return "Image has wrong size."
         case .imageRenderingFailed: return "Can't render the image."
         }
+    }
+}
+
+extension CIContext {
+    
+    func representation(of image: CIImage, format: CIFormat = kCIFormatRGBA8, colorSpace: CGColorSpace, options: [AnyHashable : Any] = [:]) -> Data? {
+        if #available(OSX 10.13, *) {
+            return pngRepresentation(of: image, format: format, colorSpace: colorSpace)
+        }
+        else if #available(OSX 10.12, *) {
+            return jpegRepresentation(of: image, colorSpace: colorSpace)
+        }
+        return nil
     }
 }

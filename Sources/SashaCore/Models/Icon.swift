@@ -18,7 +18,7 @@ final class Icon: Codable {
     
     /// Subtypes of watchOS icons with `notificationCenter` role.
     enum Subtype: String, Codable {
-        case mm38, mm42
+        case mm38 = "38mm", mm42 = "42mm"
     }
     
     let size: Float

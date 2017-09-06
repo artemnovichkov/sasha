@@ -71,10 +71,9 @@ final class IconFactory {
                     Icon(size: 27.5, idiom: .watch, filename: name, scale: 2, role: .notificationCenter, subtype: .mm42),
                     Icon(size: 29, idiom: .watch, filename: name, scale: 2, role: .companionSettings),
                     Icon(size: 29, idiom: .watch, filename: name, scale: 3, role: .companionSettings),
-                    Icon(size: 40, idiom: .watch, filename: name, scale: 2, role: .appLauncher),
-                    Icon(size: 44, idiom: .watch, filename: name, scale: 2, role: .longLook),
-                    Icon(size: 86, idiom: .watch, filename: name, scale: 2, role: .quickLook),
-                    Icon(size: 98, idiom: .watch, filename: name, scale: 2, role: .quickLook)]
+                    Icon(size: 40, idiom: .watch, filename: name, scale: 2, role: .appLauncher, subtype: .mm38),
+                    Icon(size: 86, idiom: .watch, filename: name, scale: 2, role: .quickLook, subtype: .mm38),
+                    Icon(size: 98, idiom: .watch, filename: name, scale: 2, role: .quickLook, subtype: .mm42)]
         case .watchMarketing:
             return [Icon(size: 1024, idiom: .watchMarketing, filename: name, scale: 1)]
         }

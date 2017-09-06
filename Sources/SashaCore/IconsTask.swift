@@ -4,6 +4,7 @@
 
 import Foundation
 import Swiftline
+import Files
 
 final class IconsTask: Executable {
     
@@ -23,12 +24,20 @@ final class IconsTask: Executable {
                 settings.addChoice(platform.rawValue) { return platform }
             }
         }
-        let url = URL(fileURLWithPath: "/Users/artemnovichkov/Library/Developer/Xcode/DerivedData/Sasha-hasywgxoyhtmrwcgkrbczvzshcbj/Build/Products/Debug/logo.png")
+        let fileName = ask("Enter file name: ")
+        try generateIcons(for: platform, fileName: fileName)
+    }
+    
+    private func generateIcons(for platform: Platform, fileName: String) throws {
+        let file = try Folder.current.file(named: fileName)
+        let url = URL(fileURLWithPath: file.path)
         switch platform {
         case .iOS:
             try iconService.generateIcons(for: url)
+            print("🎉 AppIcon.appiconset was successfully created")
         case .Android:
             try iconService.generateAndroidIcons(for: url)
+            print("🎉 Icons were successfully created")
         }
     }
 }

@@ -4,7 +4,7 @@ OS?=sierra
 PREFIX?=/usr/local
 PROJECT?=Sasha
 RELEASE_BINARY_FOLDER?=$(BUILD_FOLDER)/release/$(PROJECT)
-VERSION?=1.2.4
+VERSION?=2.0.1
 
 build:
 	swift build -c release -Xswiftc -static-stdlib

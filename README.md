@@ -4,7 +4,7 @@
 	<a href="https://swift.org">
     	<img src="https://img.shields.io/badge/swift-4-orange.svg?style=flat" alt="Swift 4" />
 	</a>
-		<img src="https://img.shields.io/badge/make-compatible-brightgreen.svg?style=flat" alt="Make" />
+		<img src="https://img.shields.io/badge/homebrew-compatible-brightgreen.svg?style=flat" alt="Make" />
   <a href="https://swift.org/package-manager">
   		<img src="https://img.shields.io/badge/spm-compatible-brightgreen.svg?style=flat" alt="Swift Package Manager" />
 	</a>
@@ -61,6 +61,12 @@ $ sasha icons
 Sasha asks target platform (iOS or Android), name of original image and generates icons in needed resolutions. For iOS platform Sasha generates `AppIcon.appiconset`, which iOS developer can drag and drop right into `Images.xcassets` w/o manual icon sorting 👨🏻‍💻👍.
 
 ## Installing
+
+### Homebrew (recommended):
+
+```bash
+$ brew install artemnovichkov/projects/sasha
+```
 
 ### Make:
 

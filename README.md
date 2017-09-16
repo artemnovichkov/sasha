@@ -12,7 +12,7 @@
   		<img src="https://img.shields.io/badge/marathon-compatible-brightgreen.svg?style=flat" alt="Marathon" />
 	</a>
 </p>
-Sasha is easy-to-use CLI app for routine designer tasks.
+Sasha is an easy-to-use CLI app for routine designer tasks.
 
 ## Features
 - Project folder tree generation

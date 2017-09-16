@@ -24,7 +24,7 @@ Sasha has two main commands - `project` and `icons`.
 ```bash
 $ sasha project
 ```
-Sasha asks new project name and generate folder tree. By default Sasha uses this project structure:
+Sasha asks new project name and generates folder tree. By default Sasha uses this project structure:
 
 ```
 iOS

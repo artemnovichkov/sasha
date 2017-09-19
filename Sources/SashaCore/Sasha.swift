@@ -1,9 +1,5 @@
 //
-//  Sasha.swift
-//  Sasha
-//
-//  Created by Artem Novichkov on 24/08/2017.
-//
+//  Copyright © 2017 Artem Novichkov. All rights reserved.
 //
 
 public final class Sasha {

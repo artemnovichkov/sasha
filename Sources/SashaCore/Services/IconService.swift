@@ -1,6 +1,7 @@
 //
 //  Copyright © 2017 Artem Novichkov. All rights reserved.
 //
+
 import CoreImage
 import Files
 

@@ -1,3 +1,8 @@
+//
+//  Copyright © 2017 Artem Novichkov. All rights reserved.
+//
+
+import Foundation
 import SashaCore
 
 let sasha = Sasha()

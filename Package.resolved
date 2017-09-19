@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Files",
+        "repositoryURL": "https://github.com/johnsundell/files.git",
+        "state": {
+          "branch": null,
+          "revision": "b2c38a856bfe5fbba66146ab4c33e267921673ba",
+          "version": "1.11.0"
+        }
+      },
+      {
+        "package": "Swiftline",
+        "repositoryURL": "https://github.com/nsomar/Swiftline.git",
+        "state": {
+          "branch": null,
+          "revision": "4f84dee14e47a69bfbea71a6dbba0ddc9fd9b66b",
+          "version": "0.5.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

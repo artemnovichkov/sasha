@@ -1,16 +1,20 @@
+// swift-tools-version:4.0
+
 import PackageDescription
 
 let package = Package(
     name: "Sasha",
-    targets: [
-        Target(
-            name: "Sasha",
-            dependencies: ["SashaCore"]
-        ),
-        Target(name: "SashaCore")
-    ],
     dependencies: [
-        .Package(url: "https://github.com/johnsundell/files.git", majorVersion: 1),
-        .Package(url: "https://github.com/nsomar/Swiftline.git", majorVersion: 0)
+        .package(url: "https://github.com/johnsundell/files.git", from: "1.0.0"),
+        .package(url: "https://github.com/nsomar/Swiftline.git", from: "0.0.0"),
+    ],
+    targets: [
+        .target(
+            name: "SashaCore",
+            dependencies: ["Files", "Swiftline"],
+            path: "./Sources/SashaCore"),
+        .target(
+            name: "Sasha",
+            dependencies: ["SashaCore"]),
     ]
 )

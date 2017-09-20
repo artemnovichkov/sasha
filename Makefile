@@ -17,7 +17,7 @@ clean:
 	rm -rf $(BUILD_FOLDER) $(PROJECT).xcodeproj
 
 xcode:
-	swift package generate-xcodeproj
+	swift package generate-xcodeproj --xcconfig-overrides Config.xcconfig
 
 install: build
 	mkdir -p $(PREFIX)/bin

@@ -10,11 +10,11 @@ let package = Package(
     ],
     targets: [
         .target(
+            name: "Sasha",
+            dependencies: ["SashaCore"]),
+        .target(
             name: "SashaCore",
             dependencies: ["Files", "Swiftline"],
             path: "./Sources/SashaCore"),
-        .target(
-            name: "Sasha",
-            dependencies: ["SashaCore"]),
     ]
 )

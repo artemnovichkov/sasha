@@ -81,10 +81,12 @@ $ make
 ```bash
 $ git clone https://github.com/artemnovichkov/sasha.git
 $ cd sasha
-$ swift build -c release -Xswiftc -static-stdlib
+$ swift build -c release -Xswiftc -static-stdlib -Xswiftc "-target" -Xswiftc "x86_64-apple-macosx10.12"
 $ cp -f .build/release/sasha /usr/local/bin/sasha
 $ cp -r .sasha ~
 ```
+By default SPM hardcodes the deployment target to macOS 10.10. Read more [here](https://oleb.net/blog/2017/04/swift-3-1-package-manager-deployment-target/).
+
 ### Marathon:
 
 - Install [Marathon](https://github.com/johnsundell/marathon#installing).

@@ -85,7 +85,7 @@ $ swift build -c release -Xswiftc -static-stdlib -Xswiftc "-target" -Xswiftc "x8
 $ cp -f .build/release/sasha /usr/local/bin/sasha
 $ cp -r .sasha ~
 ```
-By default SPM hardcodes the deployment target to macOS 10.10. Read more [here](https://oleb.net/blog/2017/04/swift-3-1-package-manager-deployment-target/).
+By default SPM [hardcodes](https://github.com/apple/swift-package-manager/blob/c62bd0bb8c7669fd284e6e3b2fc82f9708334b4f/Sources/Xcodeproj/pbxproj().swift#L118) the deployment target to macOS 10.10. Read more [here](https://oleb.net/blog/2017/04/swift-3-1-package-manager-deployment-target/).
 
 ### Marathon:
 

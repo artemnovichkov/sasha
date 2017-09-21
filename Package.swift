@@ -14,7 +14,6 @@ let package = Package(
             dependencies: ["SashaCore"]),
         .target(
             name: "SashaCore",
-            dependencies: ["Files", "Swiftline"],
-            path: "./Sources/SashaCore"),
+            dependencies: ["Files", "Swiftline"]),
         ]
 )

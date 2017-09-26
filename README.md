@@ -16,6 +16,10 @@
 </p>
 Sasha is an easy-to-use CLI app for routine designer tasks.
 
+<p align="center">
+  <a href="#features">Features</a> • <a href="#using">Using</a> • <a href="#installing">Installing</a> • <a href="#todo">TODO</a> • <a href="#author">Author</a> • <a href="#license">License</a>
+</p>
+
 ## Features
 - Project folder tree generation
 - iOS and Android icon slicing

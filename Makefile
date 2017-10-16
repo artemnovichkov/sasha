@@ -7,7 +7,7 @@ RELEASE_BINARY_FOLDER?=$(BUILD_FOLDER)/release/$(PROJECT)
 VERSION?=2.0.2
 
 build:
-	swift build -c release -Xswiftc -static-stdlib -Xswiftc "-target" -Xswiftc "x86_64-apple-macosx10.12"
+	swift build --disable-sandbox -c release -Xswiftc -static-stdlib -Xswiftc "-target" -Xswiftc "x86_64-apple-macosx10.12"
 
 test:
 	swift test

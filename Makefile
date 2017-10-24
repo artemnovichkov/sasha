@@ -29,7 +29,6 @@ bottle: clean build
 	cp README.md $(BINARY)/$(VERSION)/README.md
 	cp LICENSE $(BINARY)/$(VERSION)/LICENSE
 	cp -f $(RELEASE_BINARY_FOLDER) $(BINARY)/$(VERSION)/bin/$(BINARY)
-	cp -r .sasha ~
 	tar cfvz $(BINARY)-$(VERSION).$(OS).bottle.tar.gz --exclude='*/.*' $(BINARY)
 	shasum -a 256 $(BINARY)-$(VERSION).$(OS).bottle.tar.gz
 	rm -rf $(BINARY)

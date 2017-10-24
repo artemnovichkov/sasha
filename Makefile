@@ -22,6 +22,7 @@ xcode:
 install: build
 	mkdir -p $(PREFIX)/bin
 	cp -f $(RELEASE_BINARY_FOLDER) $(PREFIX)/bin/$(BINARY)
+	cp -r .sasha ~
 
 bottle: clean build
 	mkdir -p $(BINARY)/$(VERSION)/bin

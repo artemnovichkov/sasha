@@ -4,7 +4,7 @@ OS?=sierra
 PREFIX?=/usr/local
 PROJECT?=Sasha
 RELEASE_BINARY_FOLDER?=$(BUILD_FOLDER)/release/$(PROJECT)
-VERSION?=2.0.4
+VERSION?=2.0.5
 
 build:
 	swift build --disable-sandbox -c release -Xswiftc -static-stdlib -Xswiftc "-target" -Xswiftc "x86_64-apple-macosx10.12"
@@ -22,7 +22,7 @@ xcode:
 install: build
 	mkdir -p $(PREFIX)/bin
 	cp -f $(RELEASE_BINARY_FOLDER) $(PREFIX)/bin/$(BINARY)
-	cp -r .sasha ~
+	cp -a .sasha ~
 
 bottle: clean build
 	mkdir -p $(BINARY)/$(VERSION)/bin

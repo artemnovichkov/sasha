@@ -2,13 +2,27 @@
 //  Copyright © 2017 Artem Novichkov. All rights reserved.
 //
 
-import Foundation
+import Utility
 
 final class Icon: Codable {
     
     /// Idioms of icons.
-    enum Idiom: String, Codable {
+    enum Idiom: String, Codable, ArgumentKind {
+
+        enum Error: Swift.Error {
+            case invalid
+        }
+
         case iphone, ipad, iosMarketing = "ios-marketing", carplay = "car", mac, watch, watchMarketing = "watch-marketing"
+
+        static var completion: ShellCompletion = .none
+
+        init(argument: String) throws {
+            guard let idiom = Idiom(rawValue: argument) else {
+                throw Error.invalid
+            }
+            self = idiom
+        }
     }
     
     /// Roles of watchOS icons.

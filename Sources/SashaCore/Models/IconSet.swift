@@ -5,9 +5,14 @@
 import Foundation
 
 final class IconSet: Codable {
+
+    enum CodingKeys: String, CodingKey {
+        case icons = "images"
+        case info
+    }
     
     struct Info: Codable {
-        
+         
         let version: Int
         let author: String
         

@@ -5,10 +5,12 @@
 import Foundation
 import SashaCore
 
-let sasha = Sasha()
+var registry = CommandRegistry(usage: "<command> <options>",
+                               overview: "👨‍💼 Reduce daily designer routine with sasha")
 
 do {
-    try sasha.run()
+    registry.register(ProjectCommand.self, IconsCommand.self)
+    try registry.run()
 }
 catch {
     print("❌ An error occurred:\n\(error.localizedDescription)")

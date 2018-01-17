@@ -47,12 +47,8 @@ final class Icon: Codable {
         try container.encode(idiom, forKey: .idiom)
         try container.encode(filename, forKey: .filename)
         try container.encode("\(scaleString)x", forKey: .scale)
-        if let role = role {
-            try container.encode(role, forKey: .role)
-        }
-        if let subtype = subtype {
-            try container.encode(subtype, forKey: .subtype)
-        }
+        try container.encodeIfPresent(role, forKey: .role)
+        try container.encodeIfPresent(subtype, forKey: .subtype)
     }
 }
 

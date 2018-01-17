@@ -52,7 +52,7 @@ final class IconFactory {
                     Icon(size: 83.5, idiom: idiom, filename: name, scale: 2)]
         case .iosMarketing:
             return [Icon(size: 1024, idiom: idiom, filename: name, scale: 1)]
-        case .car:
+        case .carplay:
             return [Icon(size: 60, idiom: idiom, filename: name, scale: 2),
                     Icon(size: 60, idiom: idiom, filename: name, scale: 3)]
         case .mac:

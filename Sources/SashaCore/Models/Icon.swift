@@ -8,7 +8,7 @@ final class Icon: Codable {
     
     /// Idioms of icons.
     enum Idiom: String, Codable {
-        case iphone, ipad, iosMarketing = "ios-marketing", car, mac, watch, watchMarketing = "watch-marketing"
+        case iphone, ipad, iosMarketing = "ios-marketing", carplay = "car", mac, watch, watchMarketing = "watch-marketing"
     }
     
     /// Roles of watchOS icons.

@@ -8,19 +8,19 @@ public struct IconsCommand: Command {
 
     public let command = "icons"
     public let overview = "Generates an icon set for selected platform."
-    private let platform: OptionArgument<Platform>
     private let fileName: OptionArgument<String>
+    private let platform: OptionArgument<Platform>
 
     public init(parser: ArgumentParser) {
         let subparser = parser.add(subparser: command, overview: overview)
-        platform = subparser.add(option: "--platform",
-                                 shortName: "-p",
-                                 kind: Platform.self,
-                                 usage: "Platform for icon")
         fileName = subparser.add(option: "--filename",
                                  shortName: "-f",
                                  kind: String.self,
-                                 usage: "Filename of original image.")
+                                 usage: "Filename of original image. You can use full path of name of image file in current folder.")
+        platform = subparser.add(option: "--platform",
+                                 shortName: "-p",
+                                 kind: Platform.self,
+                                 usage: "Platform for icon.")
     }
 
     public func run(with arguments: ArgumentParser.Result) throws {

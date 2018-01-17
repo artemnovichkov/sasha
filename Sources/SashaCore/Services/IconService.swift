@@ -46,7 +46,7 @@ final class IconService {
         let image = try self.image(for: imageURL)
         let iconSet = iconFactory.makeSet(withName: Keys.iconName,
                                           idioms: [.iphone, .ipad, .iosMarketing])
-        try generateIcons(from: image, icons: iconSet.images, folderName: Keys.iconSetName)
+        try generateIcons(from: image, icons: iconSet.icons, folderName: Keys.iconSetName)
         try writeContents(of: iconSet)
     }
     

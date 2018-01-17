@@ -6,14 +6,12 @@ import Foundation
 
 final class IconSet: Codable {
     
-    final class Info: Codable {
+    struct Info: Codable {
         
         let version: Int
         let author: String
         
-        static var `default`: Info {
-            return Info(version: 1, author: "sasha")
-        }
+        static var `default` = Info(version: 1, author: "sasha")
         
         init(version: Int, author: String) {
             self.version = version
@@ -21,11 +19,11 @@ final class IconSet: Codable {
         }
     }
     
-    let images: [Icon]
+    let icons: [Icon]
     let info: Info
     
-    init(images: [Icon], info: Info = .default) {
-        self.images = images
+    init(icons: [Icon], info: Info = .default) {
+        self.icons = icons
         self.info = info
     }
 }

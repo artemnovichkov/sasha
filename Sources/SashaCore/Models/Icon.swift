@@ -58,11 +58,11 @@ final class Icon: Codable {
 
 extension Icon: IconRepresentable {
     
-    func iconSize() -> Float {
+    var iconSize: Float {
         return size * scale
     }
     
-    func iconName() -> String {
+    var iconName: String {
         return filename
     }
 }

@@ -91,7 +91,7 @@ final class IconService {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         
         try icons.forEach { icon in
-            let scale = icon.iconSize() / Keys.defaultSize
+            let scale = icon.iconSize / Keys.defaultSize
             filter.setValue(scale, forKey: kCIInputScaleKey)
             guard let outputImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else {
                 throw Error.imageRenderingFailed
@@ -100,7 +100,7 @@ final class IconService {
                 try fileSystem.currentFolder.subfolder(named: folderName).delete()
                 throw Error.imageRenderingFailed
             }
-            let path = [folderName, icon.iconName()].joined(separator: "/")
+            let path = [folderName, icon.iconName].joined(separator: "/")
             let file = try fileSystem.createFile(at: path)
             try file.write(data: outputData)
         }

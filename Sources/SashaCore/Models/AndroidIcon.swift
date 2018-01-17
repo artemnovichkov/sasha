@@ -17,11 +17,11 @@ final class AndroidIcon {
 
 extension AndroidIcon: IconRepresentable {
     
-    func iconSize() -> Float {
+    var iconSize: Float {
         return size
     }
     
-    func iconName() -> String {
+    var iconName: String {
         return name
     }
 }

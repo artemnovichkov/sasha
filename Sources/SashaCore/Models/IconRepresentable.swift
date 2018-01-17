@@ -7,6 +7,6 @@ import Foundation
 /// A protocol for iOS and Android icons representation.
 protocol IconRepresentable {
     
-    func iconSize() -> Float
-    func iconName() -> String
+    var iconSize: Float { get }
+    var iconName: String { get }
 }

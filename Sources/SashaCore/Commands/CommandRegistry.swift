@@ -2,6 +2,7 @@
 //  Copyright © 2018 Rosberry. All rights reserved.
 //
 
+import Foundation
 import Utility
 import Basic
 
@@ -22,13 +23,16 @@ public struct CommandRegistry {
         commands.forEach { register($0) }
     }
 
-    public func run() throws {
+    public func run() {
         do {
             let arguments = try parse()
             try process(arguments)
         }
         catch let error as ArgumentParserError {
             print(error.description)
+        }
+        catch let error as LocalizedError {
+            print(error.errorDescription ?? error.localizedDescription)
         }
         catch let error {
             print(error.localizedDescription)

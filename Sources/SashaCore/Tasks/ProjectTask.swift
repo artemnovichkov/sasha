@@ -59,7 +59,7 @@ final class ProjectTask {
 
 extension ProjectTask.Error: LocalizedError {
 
-    var localizedDescription: String {
+    var errorDescription: String {
         switch self {
         case .sketchTemplatesCreationFailed:
             return "Can't create Sketch project files from templates. Please check ~/.sasha/file_templates folder."

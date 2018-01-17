@@ -80,7 +80,7 @@ extension Icon: IconRepresentable {
 
 extension Icon.Error: LocalizedError {
 
-    var localizedDescription: String {
+    var errorDescription: String {
         switch self {
         case .invalidIdiom:
             return "Invalid idiom."

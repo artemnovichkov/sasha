@@ -3,7 +3,6 @@
 //
 
 import Foundation
-import Swiftline
 import Files
 
 final class IconsTask {

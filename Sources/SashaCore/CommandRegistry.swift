@@ -19,8 +19,7 @@ public struct CommandRegistry {
     }
 
     public mutating func register(_ commands: Command.Type...) {
-        let parsedCommands = commands.map { $0.init(parser: parser) }
-        self.commands.append(contentsOf: parsedCommands)
+        commands.forEach { register($0) }
     }
 
     public func run() throws {

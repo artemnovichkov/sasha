@@ -8,12 +8,21 @@ public struct ProjectCommand: Command {
 
     public let command = "project"
     public let overview = "Generates a project folders tree according to project.sasha file."
+    private let projectName: OptionArgument<String>
 
     public init(parser: ArgumentParser) {
-        parser.add(subparser: command, overview: overview)
+        let subparser = parser.add(subparser: command, overview: overview)
+        projectName = subparser.add(option: "--name",
+                                 shortName: "-n",
+                                 kind: String.self,
+                                 usage: "Name of the project.")
     }
 
     public func run(with arguments: ArgumentParser.Result) throws {
-        try ProjectTask().run()
+        guard let projectName = arguments.get(projectName) else {
+                //TODO: add errors
+                return
+        }
+        try ProjectTask().createProject(withName: projectName)
     }
 }

@@ -45,9 +45,9 @@ final class IconService {
     /// - Throws: `IconService.Error` errors.
     func generateIcons(for imageURL: URL, idioms: [Icon.Idiom]? = nil) throws {
         let image = try self.image(for: imageURL)
-        var fullIdioms: [Icon.Idiom] = [.iphone, .ipad, .iosMarketing]
+        var fullIdioms: Set<Icon.Idiom> = [.iphone, .ipad, .iosMarketing]
         if let idioms = idioms {
-            fullIdioms.append(contentsOf: idioms)
+            idioms.forEach { fullIdioms.insert($0) }
         }
         let iconSet = iconFactory.makeSet(withName: Keys.iconName,
                                           idioms: fullIdioms)

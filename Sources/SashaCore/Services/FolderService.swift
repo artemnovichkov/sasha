@@ -5,21 +5,21 @@
 import Foundation
 
 final class FolderService {
-    
+
     enum Keys {
         static let slash = "/"
     }
-    
+
     private class Folder {
         let name: String
         let level: Int
         var subfolders = [Folder]()
-        
+
         init(name: String, level: Int) {
             self.name = name
             self.level = level
         }
-        
+
         func add(_ folder: Folder) {
             if folder.level == level + 1 {
                 subfolders.append(folder)
@@ -28,7 +28,7 @@ final class FolderService {
             subfolders.last?.add(folder)
         }
     }
-    
+
     /// Generates the paths for project folders from configuration string.
     ///
     /// - Parameter string: The string from `sasha.project` file.

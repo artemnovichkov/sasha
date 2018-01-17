@@ -3,33 +3,28 @@
 //
 
 import Foundation
-import Swiftline
 import Files
 
-final class IconsTask: Executable {
-    
+final class IconsTask {
+
     private let iconService: IconService
-    
+
     init(iconService: IconService = IconService()) {
         self.iconService = iconService
     }
-    
-    func run() throws {
-        let platform = choose("Select a platform: ", type: Platform.self) { settings in
-            Platform.all.forEach { platform in
-                settings.addChoice(platform.rawValue) { return platform }
-            }
+
+    func generateIcons(for platform: Platform, idioms: [Icon.Idiom]? = nil, fileName: String) throws {
+        let file: File
+        if fileName.contains("/") {
+            file = try Folder.current.file(named: fileName)
         }
-        let fileName = ask("Enter file name: ")
-        try generateIcons(for: platform, fileName: fileName)
-    }
-    
-    private func generateIcons(for platform: Platform, fileName: String) throws {
-        let file = try Folder.current.file(named: fileName)
+        else {
+            file = try File(path: fileName)
+        }
         let url = URL(fileURLWithPath: file.path)
         switch platform {
         case .iOS:
-            try iconService.generateIcons(for: url)
+            try iconService.generateIcons(for: url, idioms: idioms)
             print("🎉 AppIcon.appiconset was successfully created")
         case .android:
             try iconService.generateAndroidIcons(for: url)

@@ -13,7 +13,7 @@ final class IconsTask {
         self.iconService = iconService
     }
     
-    func generateIcons(for platform: Platform, fileName: String) throws {
+    func generateIcons(for platform: Platform, idioms: [Icon.Idiom]? = nil, fileName: String) throws {
         let file: File
         if fileName.contains("/") {
             file = try Folder.current.file(named: fileName)
@@ -24,7 +24,7 @@ final class IconsTask {
         let url = URL(fileURLWithPath: file.path)
         switch platform {
         case .iOS:
-            try iconService.generateIcons(for: url)
+            try iconService.generateIcons(for: url, idioms: idioms)
             print("🎉 AppIcon.appiconset was successfully created")
         case .android:
             try iconService.generateAndroidIcons(for: url)

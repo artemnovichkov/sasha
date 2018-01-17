@@ -41,11 +41,16 @@ final class IconService {
     /// Generates icons for iOS platform.
     ///
     /// - Parameter imageURL: The url for original image.
+    /// - Parameter idioms: Idioms for additional icons. Default value is nil.
     /// - Throws: `IconService.Error` errors.
-    func generateIcons(for imageURL: URL) throws {
+    func generateIcons(for imageURL: URL, idioms: [Icon.Idiom]? = nil) throws {
         let image = try self.image(for: imageURL)
+        var fullIdioms: [Icon.Idiom] = [.iphone, .ipad, .iosMarketing]
+        if let idioms = idioms {
+            fullIdioms.append(contentsOf: idioms)
+        }
         let iconSet = iconFactory.makeSet(withName: Keys.iconName,
-                                          idioms: [.iphone, .ipad, .iosMarketing])
+                                          idioms: fullIdioms)
         try generateIcons(from: image, icons: iconSet.icons, folderName: Keys.iconSetName)
         try writeContents(of: iconSet)
     }

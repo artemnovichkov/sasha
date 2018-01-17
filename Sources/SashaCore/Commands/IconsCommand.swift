@@ -14,6 +14,7 @@ public struct IconsCommand: Command {
     public let command = "icons"
     public let overview = "Generates an icon set for selected platform."
     private let name: OptionArgument<String>
+    private let output: OptionArgument<String>
     private let platform: OptionArgument<Platform>
     private let idioms: OptionArgument<[Icon.Idiom]>
 
@@ -23,6 +24,10 @@ public struct IconsCommand: Command {
                                  shortName: "-n",
                                  kind: String.self,
                                  usage: "Filename of original image. You can use full path of name of image file in current folder.")
+        output = subparser.add(option: "--output",
+                             shortName: "-o",
+                             kind: String.self,
+                             usage: "Output path for generated icons.")
         platform = subparser.add(option: "--platform",
                                  shortName: "-p",
                                  kind: Platform.self,
@@ -39,7 +44,8 @@ public struct IconsCommand: Command {
                 throw Error.missingOptions
         }
         let idioms = arguments.get(self.idioms)
-        try IconsTask().generateIcons(for: platform, idioms: idioms, fileName: fileName)
+        let output = arguments.get(self.output)
+        try IconsTask().generateIcons(for: platform, idioms: idioms, path: fileName, output: output)
     }
 }
 

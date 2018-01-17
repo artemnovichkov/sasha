@@ -42,8 +42,9 @@ final class IconService {
     ///
     /// - Parameter imageURL: The url for original image.
     /// - Parameter idioms: Idioms for additional icons. Default value is nil.
+    /// - Parameter output: Output path for generated icons. Default value is nil.
     /// - Throws: `IconService.Error` errors.
-    func generateIcons(for imageURL: URL, idioms: [Icon.Idiom]? = nil) throws {
+    func generateIcons(for imageURL: URL, idioms: [Icon.Idiom]? = nil, output: String? = nil) throws {
         let image = try self.image(for: imageURL)
         var fullIdioms: [Icon.Idiom] = [.iphone, .ipad, .iosMarketing]
         if let idioms = idioms {
@@ -51,19 +52,28 @@ final class IconService {
         }
         let iconSet = iconFactory.makeSet(withName: Keys.iconName,
                                           idioms: fullIdioms)
-        try generateIcons(from: image, icons: iconSet.icons, folderName: Keys.iconSetName)
-        try writeContents(of: iconSet)
+        var folderName = Keys.iconSetName
+        if let output = output {
+            folderName = output + folderName
+        }
+        try generateIcons(from: image, icons: iconSet.icons, folderName: folderName)
+        try writeContents(of: iconSet, output: output)
     }
 
     /// Generates icons for Android platform.
     ///
     /// - Parameter imageURL: The url for original image.
+    /// - Parameter output: Output path for generated icons. Default value is nil.
     /// - Throws: `IconService.Error` errors.
-    func generateAndroidIcons(for imageURL: URL) throws {
+    func generateAndroidIcons(for imageURL: URL, output: String? = nil) throws {
         let image = try self.image(for: imageURL)
+        var folderName = Keys.androidIconFolder
+        if let output = output {
+            folderName = output + folderName
+        }
         try generateIcons(from: image,
                           icons: iconFactory.makeAndroidIcons(),
-                          folderName: Keys.androidIconFolder)
+                          folderName: folderName)
     }
 
     private func image(for imageURL: URL) throws -> CIImage {
@@ -114,11 +124,16 @@ final class IconService {
     /// Writes `Contents.json` file that contains names of icons.
     ///
     /// - Parameter set: The set with icons.
+    /// - Parameter output: Output path for generated icons. Default value is nil.
     /// - Throws: `File.Error.writeFailed` if the file couldn’t be written to.
-    private func writeContents(of set: IconSet) throws {
+    private func writeContents(of set: IconSet, output: String? = nil) throws {
         encoder.outputFormatting = .prettyPrinted
         let iconSetData = try encoder.encode(set)
-        let contentsFile = try fileSystem.createFile(at: Keys.iconSetName + "/" + Keys.contentsName)
+        var path = Keys.iconSetName + "/" + Keys.contentsName
+        if let output = output {
+            path = output + path
+        }
+        let contentsFile = try fileSystem.createFile(at: path)
         try contentsFile.write(data: iconSetData)
     }
 }

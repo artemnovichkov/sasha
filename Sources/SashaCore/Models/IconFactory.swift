@@ -5,7 +5,7 @@
 import Foundation
 
 final class IconFactory {
-    
+
     /// Makes a set of icons. The set contains an icons only for selected idioms.
     ///
     /// - Parameters:
@@ -19,7 +19,7 @@ final class IconFactory {
         }
         return IconSet(icons: icons)
     }
-    
+
     /// Makes a set of icons. The set contains an icons only for selected idiom.
     ///
     /// - Parameters:
@@ -78,7 +78,7 @@ final class IconFactory {
             return [Icon(size: 1024, idiom: idiom, filename: name, scale: 1)]
         }
     }
-    
+
     /// Makes an array of icons for Android. The names of icons contain full paths including needed folders.
     ///
     /// - Returns: The array of icons.

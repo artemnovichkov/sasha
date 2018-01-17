@@ -6,13 +6,13 @@ import Foundation
 import Files
 
 final class IconsTask {
-    
+
     private let iconService: IconService
-    
+
     init(iconService: IconService = IconService()) {
         self.iconService = iconService
     }
-    
+
     func generateIcons(for platform: Platform, idioms: [Icon.Idiom]? = nil, fileName: String) throws {
         let file: File
         if fileName.contains("/") {

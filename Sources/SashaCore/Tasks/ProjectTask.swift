@@ -6,45 +6,45 @@ import Foundation
 import Files
 
 final class ProjectTask {
-    
+
     enum Error: Swift.Error {
         case sketchTemplatesCreationFailed
     }
-    
+
     private enum Keys {
         static let fileTemplates = "~/.sasha/file_templates/"
     }
-    
+
     private let folderService: FolderService
     private let fileSystem: FileSystem
-    
+
     init(folderService: FolderService = FolderService(),
          fileSystem: FileSystem = FileSystem()) {
         self.folderService = folderService
         self.fileSystem = fileSystem
     }
-    
+
     func createProject(withName name: String) throws {
         let projectFile = try File(path: "~/.sasha/project.sasha")
         let projectString = try projectFile.readAsString()
-        
+
         let paths = folderService.paths(fromString: projectString)
         try paths.forEach { path in
             let finalPath = name + FolderService.Keys.slash + path
             try fileSystem.createFolder(at: finalPath)
         }
-        
+
         let projectFolder = try Folder.current.subfolder(named: name)
         do {
             try addSketchFiles(to: projectFolder, projectName: name.lowercased())
         }
-        catch  {
+        catch {
             throw Error.sketchTemplatesCreationFailed
         }
-        
+
         print("🎉 Project \(name) was successfully created.")
     }
-    
+
     private func addSketchFiles(to folder: Folder, projectName: String) throws {
         //TODO: Hardcoded paths. Think about it.
         try Platform.all.forEach { platform in
@@ -58,7 +58,7 @@ final class ProjectTask {
 }
 
 extension ProjectTask.Error: LocalizedError {
-    
+
     var localizedDescription: String {
         switch self {
         case .sketchTemplatesCreationFailed:

@@ -9,7 +9,7 @@ enum Platform: String, ArgumentKind {
     enum Error: Swift.Error {
         case invalid
     }
-    
+
     static var completion: ShellCompletion = .values(Platform.all.map { ($0.rawValue, $0.rawValue) })
 
     init(argument: String) throws {
@@ -20,7 +20,6 @@ enum Platform: String, ArgumentKind {
     }
 
     case iOS, android
-    
+
     static var all: [Platform] = [.iOS, .android]
-    
 }

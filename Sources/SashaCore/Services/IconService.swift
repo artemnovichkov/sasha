@@ -6,14 +6,14 @@ import CoreImage
 import Files
 
 final class IconService {
-    
+
     enum Error: Swift.Error {
         case imageCreationFailed
         case sizeReadingFailed
         case wrongSizeDetected
         case imageRenderingFailed
     }
-    
+
     private enum Keys {
         static let width = "PixelWidth"
         static let height = "PixelHeight"
@@ -25,11 +25,11 @@ final class IconService {
         static let androidIconName = "ic_launcher.png"
         static let defaultSize: Float = 1024
     }
-    
+
     private let iconFactory: IconFactory
     private let fileSystem: FileSystem
     private let encoder: JSONEncoder
-    
+
     init(iconFactory: IconFactory = IconFactory(),
          fileSystem: FileSystem = FileSystem(),
          encoder: JSONEncoder = JSONEncoder()) {
@@ -37,7 +37,7 @@ final class IconService {
         self.fileSystem = fileSystem
         self.encoder = encoder
     }
-    
+
     /// Generates icons for iOS platform.
     ///
     /// - Parameter imageURL: The url for original image.
@@ -54,7 +54,7 @@ final class IconService {
         try generateIcons(from: image, icons: iconSet.icons, folderName: Keys.iconSetName)
         try writeContents(of: iconSet)
     }
-    
+
     /// Generates icons for Android platform.
     ///
     /// - Parameter imageURL: The url for original image.
@@ -65,7 +65,7 @@ final class IconService {
                           icons: iconFactory.makeAndroidIcons(),
                           folderName: Keys.androidIconFolder)
     }
-    
+
     private func image(for imageURL: URL) throws -> CIImage {
         guard let image = CIImage(contentsOf: imageURL) else {
             throw Error.imageCreationFailed
@@ -79,7 +79,7 @@ final class IconService {
         }
         return image
     }
-    
+
     /// Generates icons from original image. The image is resized and written to image files.
     ///
     /// - Parameters:
@@ -91,10 +91,10 @@ final class IconService {
         let filter = CIFilter(name: Keys.lanczosFilterName)!
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(1, forKey: kCIInputAspectRatioKey)
-        
+
         let context = CIContext(options: [kCIContextUseSoftwareRenderer: false])
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        
+
         try icons.forEach { icon in
             let scale = icon.iconSize / Keys.defaultSize
             filter.setValue(scale, forKey: kCIInputScaleKey)
@@ -110,7 +110,7 @@ final class IconService {
             try file.write(data: outputData)
         }
     }
-    
+
     /// Writes `Contents.json` file that contains names of icons.
     ///
     /// - Parameter set: The set with icons.
@@ -124,7 +124,7 @@ final class IconService {
 }
 
 extension IconService.Error: LocalizedError {
-    
+
     var errorDescription: String? {
         switch self {
         case .imageCreationFailed: return "Can't create an image."
@@ -136,11 +136,11 @@ extension IconService.Error: LocalizedError {
 }
 
 extension CIContext {
-    
+
     func representation(of image: CIImage,
                         format: CIFormat = kCIFormatRGBA8,
                         colorSpace: CGColorSpace,
-                        options: [AnyHashable : Any] = [:]) -> Data? {
+                        options: [AnyHashable: Any] = [:]) -> Data? {
         if #available(OSX 10.13, *) {
             return pngRepresentation(of: image, format: format, colorSpace: colorSpace)
         }

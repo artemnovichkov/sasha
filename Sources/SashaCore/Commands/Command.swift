@@ -11,4 +11,3 @@ public protocol Command {
     init(parser: ArgumentParser)
     func run(with arguments: ArgumentParser.Result) throws
 }
-

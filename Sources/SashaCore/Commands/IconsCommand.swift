@@ -5,13 +5,13 @@
 import Utility
 
 public struct IconsCommand: Command {
-    
+
     public let command = "icons"
     public let overview = "Generates an icon set for selected platform."
     private let fileName: OptionArgument<String>
     private let platform: OptionArgument<Platform>
     private let idioms: OptionArgument<[Icon.Idiom]>
-    
+
     public init(parser: ArgumentParser) {
         let subparser = parser.add(subparser: command, overview: overview)
         fileName = subparser.add(option: "--filename",
@@ -27,7 +27,7 @@ public struct IconsCommand: Command {
                                kind: [Icon.Idiom].self,
                                usage: "A set of additional idioms.")
     }
-    
+
     public func run(with arguments: ArgumentParser.Result) throws {
         guard let platform = arguments.get(platform),
             let fileName = arguments.get(fileName) else {

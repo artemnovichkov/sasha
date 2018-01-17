@@ -12,7 +12,7 @@ final class IconSet: Codable {
         let author: String
         
         static var `default`: Info {
-            return Info(version: 1, author: "xcode")
+            return Info(version: 1, author: "sasha")
         }
         
         init(version: Int, author: String) {

@@ -19,10 +19,10 @@ final class IconsTask {
                        output: String? = nil) throws {
         let file: File
         if path.contains("/") {
-            file = try Folder.current.file(named: path)
+            file = try File(path: path)
         }
         else {
-            file = try File(path: path)
+            file = try Folder.current.file(named: path)
         }
         let url = URL(fileURLWithPath: file.path)
         switch platform {

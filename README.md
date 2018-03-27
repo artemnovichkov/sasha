@@ -21,12 +21,23 @@ Sasha is an easy-to-use CLI app for routine designer tasks.
 </p>
 
 ## Features
+- Icon slicing for iOS/watchOS/macOS/Carplay and Android
 - Project folder tree generation
-- Icon slicing for iOS + WatchOS + MacOS + Carplay and Android
 
 ## Using
-Sasha has two main commands - `project` and `icons`.
 
+###Icons
+
+Sasha has two main commands - `icons` and `project`.
+
+```bash
+$ sasha icons --platform iOS --name icon.png
+```
+Sasha generates icons in needed resolutions as well. For Apple platforms Sasha generates `AppIcon.appiconset`, which iOS developer can drag and drop right into `Images.xcassets` without manual icon sorting 👨🏻‍💻👍.
+
+There is a [service](https://github.com/artemnovichkov/sasha/issues/5#issuecomment-358310264) for Sasha. Right click on an original icon, select `Services > Sasha, make me iOS icons`.
+
+###Project generation
 ```bash
 $ sasha project --name ProjectName
 ```
@@ -60,11 +71,6 @@ stuff
 -source
 ```
 To change it, open `~/.sasha/project.sasha` file in your favourite text editor and make custom project structure.
-
-```bash
-$ sasha icons --platform iOS --name icon.png
-```
-Sasha generates icons in needed resolutions as well. For Apple platforms Sasha generates `AppIcon.appiconset`, which iOS developer can drag and drop right into `Images.xcassets` without manual icon sorting 👨🏻‍💻👍.
 
 ## Installing
 
@@ -101,6 +107,9 @@ $ cp -r .sasha ~
 ## Author
 
 Artem Novichkov, novichkoff93@gmail.com
+
+[![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/artemnovichkov?utm_source=github&utm_medium=button&utm_term=artemnovichkov&utm_campaign=github)
+
 
 ## License
 

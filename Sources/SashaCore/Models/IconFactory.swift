@@ -31,13 +31,10 @@ final class IconFactory {
         case .iphone:
             return [Icon(size: 20, idiom: idiom, filename: name, scale: 2),
                     Icon(size: 20, idiom: idiom, filename: name, scale: 3),
-                    Icon(size: 29, idiom: idiom, filename: name, scale: 1),
                     Icon(size: 29, idiom: idiom, filename: name, scale: 2),
                     Icon(size: 29, idiom: idiom, filename: name, scale: 3),
                     Icon(size: 40, idiom: idiom, filename: name, scale: 2),
                     Icon(size: 40, idiom: idiom, filename: name, scale: 3),
-                    Icon(size: 57, idiom: idiom, filename: name, scale: 1),
-                    Icon(size: 57, idiom: idiom, filename: name, scale: 2),
                     Icon(size: 60, idiom: idiom, filename: name, scale: 2),
                     Icon(size: 60, idiom: idiom, filename: name, scale: 3)]
         case .ipad:

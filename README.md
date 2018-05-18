@@ -26,7 +26,7 @@ Sasha is an easy-to-use CLI app for routine designer tasks.
 
 ## Using
 
-###Icons
+### Icons
 
 Sasha has two main commands - `icons` and `project`.
 
@@ -37,7 +37,7 @@ Sasha generates icons in needed resolutions as well. For Apple platforms Sasha g
 
 There is a [service](https://github.com/artemnovichkov/sasha/issues/5#issuecomment-358310264) for Sasha. Right click on an original icon, select `Services > Sasha, make me iOS icons`.
 
-###Project generation
+### Project generation
 ```bash
 $ sasha project --name ProjectName
 ```

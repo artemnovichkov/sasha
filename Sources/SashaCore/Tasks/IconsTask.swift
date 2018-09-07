@@ -29,6 +29,9 @@ final class IconsTask {
         case .iOS:
             try iconService.generateiOSIcons(for: url, idioms: idioms, output: output)
             print("🎉 AppIcon.appiconset was successfully created")
+        case .macOS:
+            try iconService.generateMacOSIcons(for: url, output: output)
+            print("🎉 AppIcon.appiconset was successfully created")
         case .watchOS:
             try iconService.generateWatchOSIcons(for: url, output: output)
             print("🎉 AppIcon.appiconset was successfully created")

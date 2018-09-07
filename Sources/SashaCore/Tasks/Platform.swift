@@ -21,10 +21,11 @@ enum Platform: String, ArgumentKind {
     }
 
     case iOS = "ios"
+    case macOS = "macos"
     case watchOS = "watchos"
     case android
 
-    static var all: [Platform] = [.iOS, .watchOS, .android]
+    static var all: [Platform] = [.iOS, macOS, .watchOS, .android]
 }
 
 extension Platform.Error: CustomStringConvertible {

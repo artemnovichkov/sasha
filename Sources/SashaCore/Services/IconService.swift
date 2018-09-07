@@ -52,6 +52,15 @@ final class IconService {
         try generateIcons(for: imageURL, idioms: fullIdioms, output: output)
     }
 
+    /// Generates icons for macOS platform.
+    ///
+    /// - Parameter imageURL: The url for original image.
+    /// - Parameter output: Output path for generated icons. Default value is nil.
+    /// - Throws: `IconService.Error` errors.
+    func generateMacOSIcons(for imageURL: URL, output: String? = nil) throws {
+        try generateIcons(for: imageURL, idioms: [.mac], output: output)
+    }
+
     /// Generates icons for watchOS platform.
     ///
     /// - Parameter imageURL: The url for original image.

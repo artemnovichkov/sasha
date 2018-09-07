@@ -57,9 +57,9 @@ final class ProjectTask {
     }
 }
 
-extension ProjectTask.Error: LocalizedError {
+extension ProjectTask.Error: CustomStringConvertible {
 
-    var errorDescription: String {
+    var description: String {
         switch self {
         case .sketchTemplatesCreationFailed:
             return "Can't create Sketch project files from templates. Please check ~/.sasha/file_templates folder."

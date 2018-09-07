@@ -159,9 +159,9 @@ final class IconService {
     }
 }
 
-extension IconService.Error: LocalizedError {
+extension IconService.Error: CustomStringConvertible {
 
-    var errorDescription: String? {
+    var description: String {
         switch self {
         case .imageCreationFailed: return "Can't create an image."
         case .sizeReadingFailed: return "Can't get image size."

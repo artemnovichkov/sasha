@@ -78,9 +78,9 @@ extension Icon: IconRepresentable {
     }
 }
 
-extension Icon.Error: LocalizedError {
+extension Icon.Error: CustomStringConvertible {
 
-    var errorDescription: String {
+    var description: String {
         switch self {
         case .invalidIdiom:
             return "Invalid idiom."

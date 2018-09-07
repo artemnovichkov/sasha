@@ -2,6 +2,7 @@
 //  Copyright © 2017 Artem Novichkov. All rights reserved.
 //
 
+import Foundation
 import Utility
 
 enum Platform: String, ArgumentKind {
@@ -22,4 +23,14 @@ enum Platform: String, ArgumentKind {
     case iOS, watchOS, android
 
     static var all: [Platform] = [.iOS, .watchOS, .android]
+}
+
+extension Platform.Error: CustomStringConvertible {
+    
+    var description: String {
+        switch self {
+        case .invalid:
+            return "Unsupported platform."
+        }
+    }
 }

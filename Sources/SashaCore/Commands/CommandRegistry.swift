@@ -28,14 +28,8 @@ public struct CommandRegistry {
             let arguments = try parse()
             try process(arguments)
         }
-        catch let error as ArgumentParserError {
-            print(error.description)
-        }
-        catch let error as LocalizedError {
-            print(error.errorDescription ?? error.localizedDescription)
-        }
-        catch let error {
-            print(error.localizedDescription)
+        catch {
+            print(error)
         }
     }
 

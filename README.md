@@ -1,10 +1,12 @@
 
 <p align="center">
 	<img src=".github/sasha-logo.png" alt="sasha" />
+	<a href="https://dashboard.buddybuild.com/apps/59c2143aacf26b0001a4235c/build/latest?branch=master">
+        <img src="https://dashboard.buddybuild.com/api/statusImage?appID=59c2143aacf26b0001a4235c&branch=master&build=latest" />
 	<a href="https://swift.org">
     	<img src="https://img.shields.io/badge/swift-4-orange.svg?style=flat" alt="Swift 4" />
 	</a>
-		<img src="https://img.shields.io/badge/make-compatible-brightgreen.svg?style=flat" alt="Make" />
+		<img src="https://img.shields.io/badge/homebrew-compatible-brightgreen.svg?style=flat" alt="Make" />
   <a href="https://swift.org/package-manager">
   		<img src="https://img.shields.io/badge/spm-compatible-brightgreen.svg?style=flat" alt="Swift Package Manager" />
 	</a>
@@ -12,19 +14,34 @@
   		<img src="https://img.shields.io/badge/marathon-compatible-brightgreen.svg?style=flat" alt="Marathon" />
 	</a>
 </p>
-Sasha is easy-to-use CLI app for routine designer tasks.
+Sasha is an easy-to-use CLI app for routine designer tasks.
+
+<p align="center">
+  <a href="#features">Features</a> • <a href="#using">Using</a> • <a href="#installing">Installing</a> • <a href="#author">Author</a> • <a href="#license">License</a>
+</p>
 
 ## Features
+- Icon slicing for iOS/watchOS/macOS/Carplay and Android
 - Project folder tree generation
-- iOS and Android icon slicing
 
 ## Using
-Sasha has two main commands - `project` and `icons`.
+
+### Icons
+
+Sasha has two main commands - `icons` and `project`.
 
 ```bash
-$ sasha project
+$ sasha icons --platform iOS --name icon.png
 ```
-Sasha asks new project name and generate folder tree. By default Sasha uses this project structure:
+Sasha generates icons in needed resolutions as well. For Apple platforms Sasha generates `AppIcon.appiconset`, which iOS developer can drag and drop right into `Images.xcassets` without manual icon sorting 👨🏻‍💻👍.
+
+There is a [service](https://github.com/artemnovichkov/sasha/issues/5#issuecomment-358310264) for Sasha. Right click on an original icon, select `Services > Sasha, make me iOS icons`.
+
+### Project generation
+```bash
+$ sasha project --name ProjectName
+```
+Sasha generates folder tree with name passed via `--name` option. By default Sasha uses this project structure:
 
 ```
 iOS
@@ -55,12 +72,13 @@ stuff
 ```
 To change it, open `~/.sasha/project.sasha` file in your favourite text editor and make custom project structure.
 
-```bash
-$ sasha icons
-```
-Sasha asks target platform (iOS or Android), name of original image and generates icons in needed resolutions. For iOS platform Sasha generates `AppIcon.appiconset`, which iOS developer can drag and drop right into `Images.xcassets` w/o manual icon sorting 👨🏻‍💻👍.
-
 ## Installing
+
+### Homebrew (recommended):
+
+```bash
+$ brew install artemnovichkov/projects/sasha
+```
 
 ### Make:
 
@@ -75,23 +93,23 @@ $ make
 ```bash
 $ git clone https://github.com/artemnovichkov/sasha.git
 $ cd sasha
-$ swift build -c release -Xswiftc -static-stdlib
+$ make build
 $ cp -f .build/release/sasha /usr/local/bin/sasha
 $ cp -r .sasha ~
 ```
+
 ### Marathon:
 
 - Install [Marathon](https://github.com/johnsundell/marathon#installing).
-- Add Sasha to Marathon using `$ marathon add git@github.com:artemnovichkov/sasha.git`. Alternatively, add `git@github.com:artemnovichkov/sasha.git` to your `Marathonfile`.
-- Write your script, then run it using `$ marathon run <path-to-your-script>`.
-
-## TODO
- - [ ] Remove hardcoded paths for Sketch templates
- - [ ] Add flags for platform selection: macOS, watchOS, Carplay
+- Add Files using `$ marathon add https://github.com/artemnovichkov/sasha.git`.
+- Run your script using `$ marathon run <path-to-your-script>`.
 
 ## Author
 
 Artem Novichkov, novichkoff93@gmail.com
+
+[![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/artemnovichkov?utm_source=github&utm_medium=button&utm_term=artemnovichkov&utm_campaign=github)
+
 
 ## License
 

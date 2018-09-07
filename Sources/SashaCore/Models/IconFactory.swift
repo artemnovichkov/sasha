@@ -5,7 +5,7 @@
 import Foundation
 
 final class IconFactory {
-    
+
     /// Makes a set of icons. The set contains an icons only for selected idioms.
     ///
     /// - Parameters:
@@ -13,13 +13,13 @@ final class IconFactory {
     ///   - idioms: The idioms of icons.
     /// - Returns: The set of icons.
     func makeSet(withName name: String, idioms: [Icon.Idiom]) -> IconSet {
-        var images = [Icon]()
+        var icons = [Icon]()
         idioms.forEach { idiom in
-            images.append(contentsOf: makeIcons(forName: name, idiom: idiom))
+            icons.append(contentsOf: makeIcons(forName: name, idiom: idiom))
         }
-        return IconSet(images: images)
+        return IconSet(icons: icons)
     }
-    
+
     /// Makes a set of icons. The set contains an icons only for selected idiom.
     ///
     /// - Parameters:
@@ -31,13 +31,10 @@ final class IconFactory {
         case .iphone:
             return [Icon(size: 20, idiom: idiom, filename: name, scale: 2),
                     Icon(size: 20, idiom: idiom, filename: name, scale: 3),
-                    Icon(size: 29, idiom: idiom, filename: name, scale: 1),
                     Icon(size: 29, idiom: idiom, filename: name, scale: 2),
                     Icon(size: 29, idiom: idiom, filename: name, scale: 3),
                     Icon(size: 40, idiom: idiom, filename: name, scale: 2),
                     Icon(size: 40, idiom: idiom, filename: name, scale: 3),
-                    Icon(size: 57, idiom: idiom, filename: name, scale: 1),
-                    Icon(size: 57, idiom: idiom, filename: name, scale: 2),
                     Icon(size: 60, idiom: idiom, filename: name, scale: 2),
                     Icon(size: 60, idiom: idiom, filename: name, scale: 3)]
         case .ipad:
@@ -52,7 +49,7 @@ final class IconFactory {
                     Icon(size: 83.5, idiom: idiom, filename: name, scale: 2)]
         case .iosMarketing:
             return [Icon(size: 1024, idiom: idiom, filename: name, scale: 1)]
-        case .car:
+        case .carplay:
             return [Icon(size: 60, idiom: idiom, filename: name, scale: 2),
                     Icon(size: 60, idiom: idiom, filename: name, scale: 3)]
         case .mac:
@@ -78,7 +75,7 @@ final class IconFactory {
             return [Icon(size: 1024, idiom: idiom, filename: name, scale: 1)]
         }
     }
-    
+
     /// Makes an array of icons for Android. The names of icons contain full paths including needed folders.
     ///
     /// - Returns: The array of icons.

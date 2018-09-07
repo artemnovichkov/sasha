@@ -47,7 +47,7 @@ final class ProjectTask {
 
     private func addSketchFiles(to folder: Folder, projectName: String) throws {
         //TODO: Hardcoded paths. Think about it.
-        try Platform.all.forEach { platform in
+        try Platform.allCases.forEach { platform in
             let platformName = platform.rawValue
             let sketchFile = try File(path: Keys.fileTemplates + "\(platformName.lowercased())_template.sketch")
             let sketchFileData = try sketchFile.read()
@@ -57,9 +57,9 @@ final class ProjectTask {
     }
 }
 
-extension ProjectTask.Error: LocalizedError {
+extension ProjectTask.Error: CustomStringConvertible {
 
-    var errorDescription: String {
+    var description: String {
         switch self {
         case .sketchTemplatesCreationFailed:
             return "Can't create Sketch project files from templates. Please check ~/.sasha/file_templates folder."

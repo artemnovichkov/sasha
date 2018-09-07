@@ -49,9 +49,9 @@ public struct IconsCommand: Command {
     }
 }
 
-extension IconsCommand.Error: LocalizedError {
+extension IconsCommand.Error: CustomStringConvertible {
 
-    var errorDescription: String? {
+    var description: String {
         switch self {
         case .missingOptions:
             return "Missing --platform or --name options."

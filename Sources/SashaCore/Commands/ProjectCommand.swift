@@ -31,9 +31,9 @@ public struct ProjectCommand: Command {
     }
 }
 
-extension ProjectCommand.Error: LocalizedError {
+extension ProjectCommand.Error: CustomStringConvertible {
 
-    var errorDescription: String {
+    var description: String {
         switch self {
         case .missingOptions:
             return "Missing --name option."

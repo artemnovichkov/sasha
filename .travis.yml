@@ -1,0 +1,8 @@
+os: osx
+language: swift
+osx_image: xcode9.3
+before_script:
+    - swift package generate-xcodeproj --xcconfig-overrides Config.xcconfig
+script:
+    - swift build
+

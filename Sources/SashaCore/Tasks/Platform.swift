@@ -28,7 +28,7 @@ enum Platform: String, ArgumentKind {
 }
 
 extension Platform.Error: CustomStringConvertible {
-    
+
     var description: String {
         switch self {
         case .invalid:

@@ -14,13 +14,15 @@ enum Platform: String, ArgumentKind {
     static var completion: ShellCompletion = .values(Platform.all.map { ($0.rawValue, $0.rawValue) })
 
     init(argument: String) throws {
-        guard let platform = Platform(rawValue: argument) else {
+        guard let platform = Platform(rawValue: argument.lowercased()) else {
             throw Error.invalid
         }
         self = platform
     }
 
-    case iOS, watchOS, android
+    case iOS = "ios"
+    case watchOS = "watchos"
+    case android
 
     static var all: [Platform] = [.iOS, .watchOS, .android]
 }

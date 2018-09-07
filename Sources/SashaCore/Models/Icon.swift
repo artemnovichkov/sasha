@@ -12,7 +12,7 @@ final class Icon: Codable {
 
         case iphone, ipad, iosMarketing = "ios-marketing", carplay = "car", mac, watch, watchMarketing = "watch-marketing"
 
-        static var completion: ShellCompletion = .none
+        static let completion: ShellCompletion = .none
 
         init(argument: String) throws {
             guard let idiom = Idiom(rawValue: argument) else {

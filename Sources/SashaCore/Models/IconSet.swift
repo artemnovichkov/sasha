@@ -16,7 +16,7 @@ final class IconSet: Codable {
         let version: Int
         let author: String
 
-        static var `default` = Info(version: 1, author: "sasha")
+        static let `default` = Info(version: 1, author: "sasha")
 
         init(version: Int, author: String) {
             self.version = version

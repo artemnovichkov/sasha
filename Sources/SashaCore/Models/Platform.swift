@@ -11,7 +11,7 @@ enum Platform: String, ArgumentKind {
         case invalid
     }
 
-    static var completion: ShellCompletion = .values(Platform.allCases.map { ($0.rawValue, $0.rawValue) })
+    static let completion: ShellCompletion = .values(Platform.allCases.map { ($0.rawValue, $0.rawValue) })
 
     init(argument: String) throws {
         guard let platform = Platform(rawValue: argument.lowercased()) else {

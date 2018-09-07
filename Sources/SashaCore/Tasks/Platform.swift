@@ -19,7 +19,7 @@ enum Platform: String, ArgumentKind {
         self = platform
     }
 
-    case iOS, android
+    case iOS, watchOS, android
 
-    static var all: [Platform] = [.iOS, .android]
+    static var all: [Platform] = [.iOS, .watchOS, .android]
 }

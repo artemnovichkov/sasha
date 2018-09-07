@@ -27,7 +27,10 @@ final class IconsTask {
         let url = URL(fileURLWithPath: file.path)
         switch platform {
         case .iOS:
-            try iconService.generateIcons(for: url, idioms: idioms, output: output)
+            try iconService.generateiOSIcons(for: url, idioms: idioms, output: output)
+            print("🎉 AppIcon.appiconset was successfully created")
+        case .watchOS:
+            try iconService.generateWatchOSIcons(for: url, output: output)
             print("🎉 AppIcon.appiconset was successfully created")
         case .android:
             try iconService.generateAndroidIcons(for: url)

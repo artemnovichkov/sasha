@@ -69,6 +69,7 @@ final class IconFactory {
                     Icon(size: 29, idiom: idiom, filename: name, scale: 2, role: .companionSettings),
                     Icon(size: 29, idiom: idiom, filename: name, scale: 3, role: .companionSettings),
                     Icon(size: 40, idiom: idiom, filename: name, scale: 2, role: .appLauncher, subtype: .mm38),
+                    Icon(size: 44, idiom: idiom, filename: name, scale: 2, role: .longLook, subtype: .mm42),
                     Icon(size: 86, idiom: idiom, filename: name, scale: 2, role: .quickLook, subtype: .mm38),
                     Icon(size: 98, idiom: idiom, filename: name, scale: 2, role: .quickLook, subtype: .mm42)]
         case .watchMarketing:

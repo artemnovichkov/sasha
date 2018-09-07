@@ -11,7 +11,7 @@ enum Platform: String, ArgumentKind {
         case invalid
     }
 
-    static var completion: ShellCompletion = .values(Platform.all.map { ($0.rawValue, $0.rawValue) })
+    static var completion: ShellCompletion = .values(Platform.allCases.map { ($0.rawValue, $0.rawValue) })
 
     init(argument: String) throws {
         guard let platform = Platform(rawValue: argument.lowercased()) else {
@@ -25,7 +25,7 @@ enum Platform: String, ArgumentKind {
     case watchOS = "watchos"
     case android
 
-    static var all: [Platform] = [.iOS, macOS, .watchOS, .android]
+    static let allCases: [Platform] = [.iOS, macOS, .watchOS, .android]
 }
 
 extension Platform.Error: CustomStringConvertible {

@@ -1,8 +1,7 @@
-
 <p align="center">
 	<img src=".github/sasha-logo.png" alt="sasha" />
-	<a href="https://dashboard.buddybuild.com/apps/59c2143aacf26b0001a4235c/build/latest?branch=master">
-        <img src="https://dashboard.buddybuild.com/api/statusImage?appID=59c2143aacf26b0001a4235c&branch=master&build=latest" />
+	<a href="https://travis-ci.org/artemnovichkov/sasha">
+        <img src="https://travis-ci.org/artemnovichkov/sasha.svg?branch=master" />
 	<a href="https://swift.org">
     	<img src="https://img.shields.io/badge/swift-4-orange.svg?style=flat" alt="Swift 4" />
 	</a>

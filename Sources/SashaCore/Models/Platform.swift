@@ -23,9 +23,11 @@ enum Platform: String, ArgumentKind {
     case iOS = "ios"
     case macOS = "macos"
     case watchOS = "watchos"
+    case watchOSComplication = "complication"
     case android
+    case androidWear = "androidwear"
 
-    static let allCases: [Platform] = [.iOS, macOS, .watchOS, .android]
+    static let allCases: [Platform] = [.iOS, macOS, .watchOS, .watchOSComplication, .android, .androidWear]
 }
 
 extension Platform.Error: CustomStringConvertible {

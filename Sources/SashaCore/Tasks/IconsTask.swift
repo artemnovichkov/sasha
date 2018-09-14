@@ -35,8 +35,14 @@ final class IconsTask {
         case .watchOS:
             try iconService.generateWatchOSIcons(for: url, output: output)
             print("🎉 AppIcon.appiconset was successfully created")
+        case .watchOSComplication:
+            try iconService.generateWatchOSComplicationIcons(for: url, output: output)
+            print("🎉 Complication.complicationset was successfully created")
         case .android:
             try iconService.generateAndroidIcons(for: url)
+            print("🎉 Icons were successfully created")
+        case .androidWear:
+            try iconService.generateAndroidWearIcons(for: url)
             print("🎉 Icons were successfully created")
         }
     }

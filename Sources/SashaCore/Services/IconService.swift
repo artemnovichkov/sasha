@@ -19,7 +19,9 @@ final class IconService {
         static let height = "PixelHeight"
         static let lanczosFilterName = "CILanczosScaleTransform"
         static let iconName = "Icon-App"
+        static let complicationName = "Complication"
         static let iconSetName = "AppIcon.appiconset"
+        static let complicationSetName = "Complication.complicationset"
         static let contentsName = "Contents.json"
         static let androidIconFolder = "android"
         static let androidIconName = "ic_launcher.png"
@@ -70,6 +72,31 @@ final class IconService {
         try generateIcons(for: imageURL, idioms: [.watch, .watchMarketing], output: output)
     }
 
+    /// Generates icons for watchOS platform.
+    ///
+    /// - Parameter imageURL: The url for original image.
+    /// - Parameter output: Output path for generated icons. Default value is nil.
+    /// - Throws: `IconService.Error` errors.
+    func generateWatchOSComplicationIcons(for imageURL: URL, output: String? = nil) throws {
+        let image = try self.image(for: imageURL)
+        let idioms: [Icon.Idiom] = [.complicationCircular,
+                                    .complicationExtraLarge,
+                                    .complicationModular,
+                                    .complicationUtilitarian]
+        var folderName = Keys.complicationSetName
+        if let output = output {
+            folderName = output + folderName
+        }
+        for idiom in idioms {
+            let iconSet = iconFactory.makeSet(withName: Keys.complicationName,
+                                              idioms: [idiom])
+            let setFolderName = folderName + "/" + idiom.rawValue.capitalized + ".imageset"
+            try generateIcons(from: image, icons: iconSet.icons, folderName: setFolderName)
+            try writeContents(of: iconSet, path: setFolderName + "/" + Keys.contentsName)
+        }
+        try writeContents(of: iconFactory.makeComplicationSet(), path: folderName + "/" + Keys.contentsName)
+    }
+
     /// Generates icons for Android platform.
     ///
     /// - Parameter imageURL: The url for original image.
@@ -117,21 +144,33 @@ final class IconService {
             folderName = output + folderName
         }
         try generateIcons(from: image, icons: iconSet.icons, folderName: folderName)
-        try writeContents(of: iconSet, output: output)
-    }
-
-    /// Writes `Contents.json` file that contains names of icons.
-    ///
-    /// - Parameter set: The set with icons.
-    /// - Parameter output: Output path for generated icons. Default value is nil.
-    /// - Throws: `File.Error.writeFailed` if the file couldn’t be written to.
-    private func writeContents(of set: IconSet, output: String? = nil) throws {
-        encoder.outputFormatting = .prettyPrinted
-        let iconSetData = try encoder.encode(set)
         var path = Keys.iconSetName + "/" + Keys.contentsName
         if let output = output {
             path = output + path
         }
+        try writeContents(of: iconSet, path: path)
+    }
+
+    /// Writes contents file that contains names of icons.
+    ///
+    /// - Parameter set: The set with icons.
+    /// - Parameter path: Path for generated icons.
+    /// - Throws: `File.Error.writeFailed` if the file couldn’t be written to.
+    private func writeContents(of set: AppIconSet, path: String) throws {
+        encoder.outputFormatting = .prettyPrinted
+        let iconSetData = try encoder.encode(set)
+        let contentsFile = try fileSystem.createFile(at: path)
+        try contentsFile.write(data: iconSetData)
+    }
+
+    /// Writes contents file that contains names of icons.
+    ///
+    /// - Parameter set: The set with assets.
+    /// - Parameter path: Path for generated icons.
+    /// - Throws: `File.Error.writeFailed` if the file couldn’t be written to.
+    private func writeContents(of set: ComplicationSet, path: String) throws {
+        encoder.outputFormatting = .prettyPrinted
+        let iconSetData = try encoder.encode(set)
         let contentsFile = try fileSystem.createFile(at: path)
         try contentsFile.write(data: iconSetData)
     }

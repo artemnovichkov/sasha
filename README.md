@@ -20,7 +20,14 @@ Sasha is an easy-to-use CLI app for routine designer tasks.
 </p>
 
 ## Features
-- Icon slicing for iOS/watchOS/macOS/Carplay and Android
+- Icon slicing for different platforms:
+  - iOS
+  - watchOS
+  - watchOS Complications
+  - macOS
+  - Carplay
+  - Android
+  - Android Wear
 - Project folder tree generation
 
 ## Using

@@ -23,8 +23,7 @@ final class IconService {
         static let iconSetName = "AppIcon.appiconset"
         static let complicationSetName = "Complication.complicationset"
         static let contentsName = "Contents.json"
-        static let androidIconFolder = "android"
-        static let androidIconName = "ic_launcher.png"
+        static let androidIconFolder = "Android"
         static let defaultSize: Float = 1024
     }
 
@@ -110,6 +109,22 @@ final class IconService {
         }
         try generateIcons(from: image,
                           icons: iconFactory.makeAndroidIcons(),
+                          folderName: folderName)
+    }
+
+    /// Generates icons for Android Wear platform.
+    ///
+    /// - Parameter imageURL: The url for original image.
+    /// - Parameter output: Output path for generated icons. Default value is nil.
+    /// - Throws: `IconService.Error` errors.
+    func generateAndroidWearIcons(for imageURL: URL, output: String? = nil) throws {
+        let image = try self.image(for: imageURL)
+        var folderName = Keys.androidIconFolder
+        if let output = output {
+            folderName = output + folderName
+        }
+        try generateIcons(from: image,
+                          icons: iconFactory.makeAndroidWearIcons(),
                           folderName: folderName)
     }
 

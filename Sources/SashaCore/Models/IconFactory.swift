@@ -41,6 +41,16 @@ final class IconFactory {
                 AndroidIcon(size: 512, name: "playstore-icon.png")]
     }
 
+    /// Makes an array of icons for Android Wear. The names of icons contain full paths including needed folders.
+    ///
+    /// - Returns: The array of icons.
+    func makeAndroidWearIcons() -> [AndroidIcon] {
+        return [AndroidIcon(size: 72, name: "mipmap-hdpi/ic_launcher.png"),
+                AndroidIcon(size: 48, name: "mipmap-mdpi/ic_launcher.png"),
+                AndroidIcon(size: 96, name: "mipmap-xhdpi/ic_launcher.png"),
+                AndroidIcon(size: 144, name: "mipmap-xxhdpi/ic_launcher.png")]
+    }
+
     /// Makes a set of icons. The set contains an icons only for selected idiom.
     ///
     /// - Parameters:

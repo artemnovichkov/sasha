@@ -41,6 +41,9 @@ final class IconsTask {
         case .android:
             try iconService.generateAndroidIcons(for: url)
             print("🎉 Icons were successfully created")
+        case .androidWear:
+            try iconService.generateAndroidWearIcons(for: url)
+            print("🎉 Icons were successfully created")
         }
     }
 }

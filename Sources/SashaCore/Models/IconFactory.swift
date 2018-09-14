@@ -13,9 +13,8 @@ final class IconFactory {
     ///   - idioms: The idioms of icons.
     /// - Returns: The set of icons.
     func makeSet(withName name: String, idioms: [Icon.Idiom]) -> AppIconSet {
-        var icons = [Icon]()
-        idioms.forEach { idiom in
-            icons.append(contentsOf: makeIcons(forName: name, idiom: idiom))
+        let icons = idioms.flatMap { idiom in
+            makeIcons(forName: name, idiom: idiom)
         }
         return AppIconSet(icons: icons)
     }

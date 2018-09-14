@@ -150,7 +150,7 @@ final class IconService {
     /// - Parameter idioms: Idioms for icons.
     /// - Parameter output: Output path for generated icons. Default value is nil.
     /// - Throws: `IconService.Error` errors.
-    func generateIcons(for imageURL: URL, idioms: [Icon.Idiom], output: String? = nil) throws {
+    private func generateIcons(for imageURL: URL, idioms: [Icon.Idiom], output: String? = nil) throws {
         let image = try self.image(for: imageURL)
         let iconSet = iconFactory.makeSet(withName: Keys.iconName,
                                           idioms: idioms)

@@ -29,10 +29,23 @@ final class Icon: Codable {
         case watchMarketing = "watch-marketing"
         case complicationCircular = "circular"
         case complicationExtraLarge = "extra large"
+        case complicationGraphicBezel = "graphic bezel"
+        case complicationGraphicCircular = "graphic circular"
+        case complicationGraphicCorner = "graphic corner"
+        case complicationGraphicLargeRectangular = "graphic large rectangular"
         case complicationModular = "modular"
         case complicationUtilitarian = "utilitarian"
 
         static let completion: ShellCompletion = .none
+
+        static let complications: [Idiom] = [.complicationCircular,
+                                             .complicationExtraLarge,
+                                             .complicationGraphicBezel,
+                                             .complicationGraphicCircular,
+                                             .complicationGraphicCorner,
+                                             .complicationGraphicLargeRectangular,
+                                             .complicationModular,
+                                             .complicationUtilitarian]
 
         init(argument: String) throws {
             guard let idiom = Idiom(rawValue: argument) else {
@@ -51,17 +64,20 @@ final class Icon: Codable {
         case notificationCenter
         case companionSettings
         case appLauncher
-        case longLook
         case quickLook
         case circular
         case extraLarge = "extra-large"
+        case graphicBezel = "graphic-bezel"
+        case graphicCircular = "graphic-circular"
+        case graphicCorner = "graphic-corner"
+        case graphicLargeRectangular = "graphic-large-rectangular"
         case modular
         case utilitarian
     }
 
     /// Subtypes of watchOS icons with `notificationCenter` role.
     enum Subtype: String, Codable {
-        case mm38 = "38mm", mm42 = "42mm"
+        case mm38 = "38mm", mm40 = "40mm", mm42 = "42mm", mm44 = "44mm"
     }
 
     let idiom: Idiom
@@ -92,11 +108,7 @@ final class Icon: Codable {
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        let complications: [Idiom] = [.complicationCircular,
-                                      .complicationExtraLarge,
-                                      .complicationModular,
-                                      .complicationUtilitarian]
-        let isComplication = complications.contains(idiom)
+        let isComplication = Idiom.complications.contains(idiom)
         if isComplication {
             try container.encode(Idiom.watch, forKey: .idiom)
         }

@@ -80,6 +80,10 @@ final class IconService {
         let image = try self.image(for: imageURL)
         let idioms: [Icon.Idiom] = [.complicationCircular,
                                     .complicationExtraLarge,
+                                    .complicationGraphicBezel,
+                                    .complicationGraphicCircular,
+                                    .complicationGraphicCorner,
+                                    .complicationGraphicLargeRectangular,
                                     .complicationModular,
                                     .complicationUtilitarian]
         var folderName = Keys.complicationSetName

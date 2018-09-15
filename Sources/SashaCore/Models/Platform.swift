@@ -5,7 +5,7 @@
 import Foundation
 import Utility
 
-enum Platform: String, ArgumentKind {
+enum Platform: String, ArgumentKind, CaseIterable {
 
     enum Error: Swift.Error {
         case invalid
@@ -26,8 +26,6 @@ enum Platform: String, ArgumentKind {
     case watchOSComplication = "complication"
     case android
     case androidWear = "androidwear"
-
-    static let allCases: [Platform] = [.iOS, macOS, .watchOS, .watchOSComplication, .android, .androidWear]
 }
 
 extension Platform.Error: CustomStringConvertible {

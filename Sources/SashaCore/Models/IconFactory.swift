@@ -22,6 +22,10 @@ final class IconFactory {
     func makeComplicationSet() -> ComplicationSet {
         let assets = [Asset(idiom: .watch, filename: "Circular.imageset", role: .circular),
                       Asset(idiom: .watch, filename: "Extra Large.imageset", role: .extraLarge),
+                      Asset(idiom: .watch, filename: "Graphic Bezel.imageset", role: .graphicBezel),
+                      Asset(idiom: .watch, filename: "Graphic Circular.imageset", role: .graphicCircular),
+                      Asset(idiom: .watch, filename: "Graphic Corner.imageset", role: .graphicCorner),
+                      Asset(idiom: .watch, filename: "Graphic Large Rectangular.imageset", role: .graphicLargeRectangular),
                       Asset(idiom: .watch, filename: "Modular.imageset", role: .modular),
                       Asset(idiom: .watch, filename: "Utilitarian.imageset", role: .utilitarian)]
         return ComplicationSet(assets: assets)
@@ -99,23 +103,50 @@ final class IconFactory {
                     Icon(idiom: idiom,size: 29, filename: name, scale: 2, role: .companionSettings),
                     Icon(idiom: idiom, size: 29, filename: name, scale: 3, role: .companionSettings),
                     Icon(idiom: idiom, size: 40, filename: name, scale: 2, role: .appLauncher, subtype: .mm38),
-                    Icon(idiom: idiom, size: 44, filename: name, scale: 2, role: .longLook, subtype: .mm42),
+                    Icon(idiom: idiom, size: 44, filename: name, scale: 2, role: .appLauncher, subtype: .mm40),
+                    Icon(idiom: idiom, size: 50, filename: name, scale: 2, role: .appLauncher, subtype: .mm44),
                     Icon(idiom: idiom, size: 86, filename: name, scale: 2, role: .quickLook, subtype: .mm38),
-                    Icon(idiom: idiom, size: 98, filename: name, scale: 2, role: .quickLook, subtype: .mm42)]
+                    Icon(idiom: idiom, size: 98, filename: name, scale: 2, role: .quickLook, subtype: .mm42),
+                    Icon(idiom: idiom, size: 108, filename: name, scale: 2, role: .quickLook, subtype: .mm44)]
         case .watchMarketing:
             return [Icon(idiom: idiom, size: 1024, filename: name, scale: 1)]
         case .complicationCircular:
-            return [Icon(idiom: idiom, size: 16, filename: name, screenWidth: "<=145", scale: 2),
-                    Icon(idiom: idiom, size: 18, filename: name, screenWidth: ">145", scale: 2)]
+            return [Icon(idiom: idiom, size: 16, filename: name + "-\(Icon.Subtype.mm38.rawValue)", screenWidth: "<=145", scale: 2),
+                    Icon(idiom: idiom, size: 18, filename: name + "-\(Icon.Subtype.mm42.rawValue)", screenWidth: ">161", scale: 2),
+                    Icon(idiom: idiom, size: 18, filename: name + "-\(Icon.Subtype.mm40.rawValue)", screenWidth: ">145", scale: 2),
+                    Icon(idiom: idiom, size: 18, filename: name + "-\(Icon.Subtype.mm44.rawValue)", screenWidth: ">183", scale: 2)]
         case .complicationExtraLarge:
-            return [Icon(idiom: idiom, size: 91, filename: name, screenWidth: "<=145", scale: 2),
-                    Icon(idiom: idiom, size: 101.5, filename: name, screenWidth: ">145", scale: 2)]
+            return [Icon(idiom: idiom, size: 91, filename: name + "-\(Icon.Subtype.mm38.rawValue)", screenWidth: "<=145", scale: 2),
+                    Icon(idiom: idiom, size: 101.5, filename: name + "-\(Icon.Subtype.mm42.rawValue)", screenWidth: ">161", scale: 2),
+                    Icon(idiom: idiom, size: 101.5, filename: name + "-\(Icon.Subtype.mm40.rawValue)", screenWidth: ">145", scale: 2),
+                    Icon(idiom: idiom, size: 112, filename: name + "-\(Icon.Subtype.mm44.rawValue)", screenWidth: ">183", scale: 2)]
+        case .complicationGraphicBezel:
+            return [Icon(idiom: idiom, size: 42, filename: name + "-\(Icon.Subtype.mm38.rawValue)", screenWidth: "<=145", scale: 2),
+                    Icon(idiom: idiom, size: 42, filename: name + "-\(Icon.Subtype.mm42.rawValue)", screenWidth: ">161", scale: 2),
+                    Icon(idiom: idiom, size: 42, filename: name + "-\(Icon.Subtype.mm40.rawValue)", screenWidth: ">145", scale: 2),
+                    Icon(idiom: idiom, size: 47, filename: name + "-\(Icon.Subtype.mm44.rawValue)", screenWidth: ">183", scale: 2)]
+        case .complicationGraphicCircular:
+            return [Icon(idiom: idiom, size: 42, filename: name + "-\(Icon.Subtype.mm38.rawValue)", screenWidth: "<=145", scale: 2),
+                    Icon(idiom: idiom, size: 42, filename: name + "-\(Icon.Subtype.mm42.rawValue)", screenWidth: ">161", scale: 2),
+                    Icon(idiom: idiom, size: 42, filename: name + "-\(Icon.Subtype.mm40.rawValue)", screenWidth: ">145", scale: 2),
+                    Icon(idiom: idiom, size: 47, filename: name + "-\(Icon.Subtype.mm44.rawValue)", screenWidth: ">183", scale: 2)]
+        case .complicationGraphicCorner:
+            return [Icon(idiom: idiom, size: 20, filename: name + "-\(Icon.Subtype.mm38.rawValue)", screenWidth: "<=145", scale: 2),
+                    Icon(idiom: idiom, size: 20, filename: name + "-\(Icon.Subtype.mm42.rawValue)", screenWidth: ">161", scale: 2),
+                    Icon(idiom: idiom, size: 20, filename: name + "-\(Icon.Subtype.mm40.rawValue)", screenWidth: ">145", scale: 2),
+                    Icon(idiom: idiom, size: 22, filename: name + "-\(Icon.Subtype.mm44.rawValue)", screenWidth: ">183", scale: 2)]
+        case .complicationGraphicLargeRectangular:
+            return []
         case .complicationModular:
-            return [Icon(idiom: idiom, size: 26, filename: name, screenWidth: "<=145", scale: 2),
-                    Icon(idiom: idiom, size: 29, filename: name, screenWidth: ">145", scale: 2)]
+            return [Icon(idiom: idiom, size: 26, filename: name + "-\(Icon.Subtype.mm38.rawValue)", screenWidth: "<=145", scale: 2),
+                    Icon(idiom: idiom, size: 29, filename: name + "-\(Icon.Subtype.mm42.rawValue)", screenWidth: ">161", scale: 2),
+                    Icon(idiom: idiom, size: 29, filename: name + "-\(Icon.Subtype.mm40.rawValue)", screenWidth: ">145", scale: 2),
+                    Icon(idiom: idiom, size: 32, filename: name + "-\(Icon.Subtype.mm44.rawValue)", screenWidth: ">183", scale: 2)]
         case .complicationUtilitarian:
-            return [Icon(idiom: idiom, size: 20, filename: name, screenWidth: "<=145", scale: 2),
-                    Icon(idiom: idiom, size: 22, filename: name, screenWidth: ">145", scale: 2)]
+            return [Icon(idiom: idiom, size: 20, filename: name + "-\(Icon.Subtype.mm38.rawValue)", screenWidth: "<=145", scale: 2),
+                    Icon(idiom: idiom, size: 22, filename: name + "-\(Icon.Subtype.mm42.rawValue)", screenWidth: ">161", scale: 2),
+                    Icon(idiom: idiom, size: 22, filename: name + "-\(Icon.Subtype.mm40.rawValue)", screenWidth: ">145", scale: 2),
+                    Icon(idiom: idiom, size: 25, filename: name + "-\(Icon.Subtype.mm44.rawValue)", screenWidth: ">183", scale: 2)]
         }
     }
 }

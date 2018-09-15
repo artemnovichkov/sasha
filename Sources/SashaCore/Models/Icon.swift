@@ -51,7 +51,6 @@ final class Icon: Codable {
         case notificationCenter
         case companionSettings
         case appLauncher
-        case longLook
         case quickLook
         case circular
         case extraLarge = "extra-large"
@@ -61,7 +60,7 @@ final class Icon: Codable {
 
     /// Subtypes of watchOS icons with `notificationCenter` role.
     enum Subtype: String, Codable {
-        case mm38 = "38mm", mm42 = "42mm"
+        case mm38 = "38mm", mm40 = "40mm", mm42 = "42mm", mm44 = "44mm"
     }
 
     let idiom: Idiom

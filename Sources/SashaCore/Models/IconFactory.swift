@@ -99,9 +99,11 @@ final class IconFactory {
                     Icon(idiom: idiom,size: 29, filename: name, scale: 2, role: .companionSettings),
                     Icon(idiom: idiom, size: 29, filename: name, scale: 3, role: .companionSettings),
                     Icon(idiom: idiom, size: 40, filename: name, scale: 2, role: .appLauncher, subtype: .mm38),
-                    Icon(idiom: idiom, size: 44, filename: name, scale: 2, role: .longLook, subtype: .mm42),
+                    Icon(idiom: idiom, size: 44, filename: name, scale: 2, role: .appLauncher, subtype: .mm40),
+                    Icon(idiom: idiom, size: 50, filename: name, scale: 2, role: .appLauncher, subtype: .mm44),
                     Icon(idiom: idiom, size: 86, filename: name, scale: 2, role: .quickLook, subtype: .mm38),
-                    Icon(idiom: idiom, size: 98, filename: name, scale: 2, role: .quickLook, subtype: .mm42)]
+                    Icon(idiom: idiom, size: 98, filename: name, scale: 2, role: .quickLook, subtype: .mm42),
+                    Icon(idiom: idiom, size: 108, filename: name, scale: 2, role: .quickLook, subtype: .mm44)]
         case .watchMarketing:
             return [Icon(idiom: idiom, size: 1024, filename: name, scale: 1)]
         case .complicationCircular:

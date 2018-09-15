@@ -22,7 +22,7 @@ Sasha is an easy-to-use CLI app for routine designer tasks.
 ## Features
 - Icon slicing for different platforms:
   - iOS
-  - watchOS
+  - watchOS including 40 and 44 mm versions
   - watchOS Complications
   - macOS
   - Carplay

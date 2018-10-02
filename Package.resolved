@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Files",
+        "repositoryURL": "https://github.com/johnsundell/files.git",
+        "state": {
+          "branch": null,
+          "revision": "6171f9e9d8619678da22355560f3dbed6368058d",
+          "version": "2.0.1"
+        }
+      },
+      {
+        "package": "SwiftPM",
+        "repositoryURL": "https://github.com/apple/swift-package-manager.git",
+        "state": {
+          "branch": null,
+          "revision": "90abb3c4c9415afee34291e66e655c58a1902784",
+          "version": "0.1.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

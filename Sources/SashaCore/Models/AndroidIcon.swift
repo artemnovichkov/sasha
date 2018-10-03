@@ -5,10 +5,10 @@
 import Foundation
 
 final class AndroidIcon {
-    
+
     let size: Float
     let name: String
-    
+
     init(size: Float, name: String) {
         self.size = size
         self.name = name
@@ -16,12 +16,12 @@ final class AndroidIcon {
 }
 
 extension AndroidIcon: IconRepresentable {
-    
-    func iconSize() -> Float {
+
+    var iconSize: Float {
         return size
     }
-    
-    func iconName() -> String {
+
+    var iconName: String {
         return name
     }
 }

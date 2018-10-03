@@ -1,65 +1,139 @@
 //
 //  Copyright © 2017 Artem Novichkov. All rights reserved.
 //
+
 import CoreImage
 import Files
 
 final class IconService {
-    
+
     enum Error: Swift.Error {
         case imageCreationFailed
         case sizeReadingFailed
         case wrongSizeDetected
         case imageRenderingFailed
     }
-    
+
     private enum Keys {
         static let width = "PixelWidth"
         static let height = "PixelHeight"
         static let lanczosFilterName = "CILanczosScaleTransform"
         static let iconName = "Icon-App"
+        static let complicationName = "Complication"
         static let iconSetName = "AppIcon.appiconset"
+        static let complicationSetName = "Complication.complicationset"
         static let contentsName = "Contents.json"
-        static let androidIconFolder = "android"
-        static let androidIconName = "ic_launcher.png"
+        static let androidIconFolder = "Android"
         static let defaultSize: Float = 1024
     }
-    
+
     private let iconFactory: IconFactory
     private let fileSystem: FileSystem
     private let encoder: JSONEncoder
-    
-    init(iconFactory: IconFactory = IconFactory(),
-         fileSystem: FileSystem = FileSystem(),
-         encoder: JSONEncoder = JSONEncoder()) {
+
+    init(iconFactory: IconFactory = .init(),
+         fileSystem: FileSystem = .init(),
+         encoder: JSONEncoder = .init()) {
         self.iconFactory = iconFactory
         self.fileSystem = fileSystem
         self.encoder = encoder
     }
-    
+
     /// Generates icons for iOS platform.
     ///
     /// - Parameter imageURL: The url for original image.
+    /// - Parameter idioms: Idioms for additional icons. Default value is nil.
+    /// - Parameter output: Output path for generated icons. Default value is nil.
     /// - Throws: `IconService.Error` errors.
-    func generateIcons(for imageURL: URL) throws {
-        let image = try self.image(for: imageURL)
-        let iconSet = iconFactory.makeSet(withName: Keys.iconName,
-                                          idioms: [.iphone, .ipad, .iosMarketing])
-        try generateIcons(from: image, icons: iconSet.images, folderName: Keys.iconSetName)
-        try writeContents(of: iconSet)
+    func generateiOSIcons(for imageURL: URL, idioms: [Icon.Idiom]? = nil, output: String? = nil) throws {
+        var fullIdioms: [Icon.Idiom] = [.iphone, .ipad, .iosMarketing]
+        if let idioms = idioms {
+            fullIdioms.append(contentsOf: idioms)
+        }
+        try generateIcons(for: imageURL, idioms: fullIdioms, output: output)
     }
-    
+
+    /// Generates icons for macOS platform.
+    ///
+    /// - Parameter imageURL: The url for original image.
+    /// - Parameter output: Output path for generated icons. Default value is nil.
+    /// - Throws: `IconService.Error` errors.
+    func generateMacOSIcons(for imageURL: URL, output: String? = nil) throws {
+        try generateIcons(for: imageURL, idioms: [.mac], output: output)
+    }
+
+    /// Generates icons for watchOS platform.
+    ///
+    /// - Parameter imageURL: The url for original image.
+    /// - Parameter output: Output path for generated icons. Default value is nil.
+    /// - Throws: `IconService.Error` errors.
+    func generateWatchOSIcons(for imageURL: URL, output: String? = nil) throws {
+        try generateIcons(for: imageURL, idioms: [.watch, .watchMarketing], output: output)
+    }
+
+    /// Generates icons for watchOS platform.
+    ///
+    /// - Parameter imageURL: The url for original image.
+    /// - Parameter output: Output path for generated icons. Default value is nil.
+    /// - Throws: `IconService.Error` errors.
+    func generateWatchOSComplicationIcons(for imageURL: URL, output: String? = nil) throws {
+        let image = try self.image(for: imageURL)
+        let idioms: [Icon.Idiom] = [.complicationCircular,
+                                    .complicationExtraLarge,
+                                    .complicationGraphicBezel,
+                                    .complicationGraphicCircular,
+                                    .complicationGraphicCorner,
+                                    .complicationGraphicLargeRectangular,
+                                    .complicationModular,
+                                    .complicationUtilitarian]
+        var folderName = Keys.complicationSetName
+        if let output = output {
+            folderName = output + folderName
+        }
+        for idiom in idioms {
+            let iconSet = iconFactory.makeSet(withName: Keys.complicationName,
+                                              idioms: [idiom])
+            let setFolderName = folderName + "/" + idiom.rawValue.capitalized + ".imageset"
+            try generateIcons(from: image, icons: iconSet.icons, folderName: setFolderName)
+            try writeContents(of: iconSet, path: setFolderName + "/" + Keys.contentsName)
+        }
+        try writeContents(of: iconFactory.makeComplicationSet(), path: folderName + "/" + Keys.contentsName)
+    }
+
     /// Generates icons for Android platform.
     ///
     /// - Parameter imageURL: The url for original image.
+    /// - Parameter output: Output path for generated icons. Default value is nil.
     /// - Throws: `IconService.Error` errors.
-    func generateAndroidIcons(for imageURL: URL) throws {
+    func generateAndroidIcons(for imageURL: URL, output: String? = nil) throws {
         let image = try self.image(for: imageURL)
+        var folderName = Keys.androidIconFolder
+        if let output = output {
+            folderName = output + folderName
+        }
         try generateIcons(from: image,
                           icons: iconFactory.makeAndroidIcons(),
-                          folderName: Keys.androidIconFolder)
+                          folderName: folderName)
     }
-    
+
+    /// Generates icons for Android Wear platform.
+    ///
+    /// - Parameter imageURL: The url for original image.
+    /// - Parameter output: Output path for generated icons. Default value is nil.
+    /// - Throws: `IconService.Error` errors.
+    func generateAndroidWearIcons(for imageURL: URL, output: String? = nil) throws {
+        let image = try self.image(for: imageURL)
+        var folderName = Keys.androidIconFolder
+        if let output = output {
+            folderName = output + folderName
+        }
+        try generateIcons(from: image,
+                          icons: iconFactory.makeAndroidWearIcons(),
+                          folderName: folderName)
+    }
+
+    // MARK: - Private
+
     private func image(for imageURL: URL) throws -> CIImage {
         guard let image = CIImage(contentsOf: imageURL) else {
             throw Error.imageCreationFailed
@@ -73,7 +147,53 @@ final class IconService {
         }
         return image
     }
-    
+
+    /// Generates icons for Apple platforms.
+    ///
+    /// - Parameter imageURL: The url for original image.
+    /// - Parameter idioms: Idioms for icons.
+    /// - Parameter output: Output path for generated icons. Default value is nil.
+    /// - Throws: `IconService.Error` errors.
+    private func generateIcons(for imageURL: URL, idioms: [Icon.Idiom], output: String? = nil) throws {
+        let image = try self.image(for: imageURL)
+        let iconSet = iconFactory.makeSet(withName: Keys.iconName,
+                                          idioms: idioms)
+        var folderName = Keys.iconSetName
+        if let output = output {
+            folderName = output + folderName
+        }
+        try generateIcons(from: image, icons: iconSet.icons, folderName: folderName)
+        var path = Keys.iconSetName + "/" + Keys.contentsName
+        if let output = output {
+            path = output + path
+        }
+        try writeContents(of: iconSet, path: path)
+    }
+
+    /// Writes contents file that contains names of icons.
+    ///
+    /// - Parameter set: The set with icons.
+    /// - Parameter path: Path for generated icons.
+    /// - Throws: `File.Error.writeFailed` if the file couldn’t be written to.
+    private func writeContents(of set: AppIconSet, path: String) throws {
+        encoder.outputFormatting = .prettyPrinted
+        let iconSetData = try encoder.encode(set)
+        let contentsFile = try fileSystem.createFile(at: path)
+        try contentsFile.write(data: iconSetData)
+    }
+
+    /// Writes contents file that contains names of icons.
+    ///
+    /// - Parameter set: The set with assets.
+    /// - Parameter path: Path for generated icons.
+    /// - Throws: `File.Error.writeFailed` if the file couldn’t be written to.
+    private func writeContents(of set: ComplicationSet, path: String) throws {
+        encoder.outputFormatting = .prettyPrinted
+        let iconSetData = try encoder.encode(set)
+        let contentsFile = try fileSystem.createFile(at: path)
+        try contentsFile.write(data: iconSetData)
+    }
+
     /// Generates icons from original image. The image is resized and written to image files.
     ///
     /// - Parameters:
@@ -85,12 +205,12 @@ final class IconService {
         let filter = CIFilter(name: Keys.lanczosFilterName)!
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(1, forKey: kCIInputAspectRatioKey)
-        
+
         let context = CIContext(options: [kCIContextUseSoftwareRenderer: false])
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        
+
         try icons.forEach { icon in
-            let scale = icon.iconSize() / Keys.defaultSize
+            let scale = icon.iconSize / Keys.defaultSize
             filter.setValue(scale, forKey: kCIInputScaleKey)
             guard let outputImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else {
                 throw Error.imageRenderingFailed
@@ -99,27 +219,16 @@ final class IconService {
                 try fileSystem.currentFolder.subfolder(named: folderName).delete()
                 throw Error.imageRenderingFailed
             }
-            let path = [folderName, icon.iconName()].joined(separator: "/")
+            let path = [folderName, icon.iconName].joined(separator: "/")
             let file = try fileSystem.createFile(at: path)
             try file.write(data: outputData)
         }
     }
-    
-    /// Writes `Contents.json` file that contains names of icons.
-    ///
-    /// - Parameter set: The set with icons.
-    /// - Throws: `File.Error.writeFailed` if the file couldn’t be written to.
-    private func writeContents(of set: IconSet) throws {
-        encoder.outputFormatting = .prettyPrinted
-        let iconSetData = try encoder.encode(set)
-        let contentsFile = try fileSystem.createFile(at: Keys.iconSetName + "/" + Keys.contentsName)
-        try contentsFile.write(data: iconSetData)
-    }
 }
 
-extension IconService.Error: LocalizedError {
-    
-    var errorDescription: String? {
+extension IconService.Error: CustomStringConvertible {
+
+    var description: String {
         switch self {
         case .imageCreationFailed: return "Can't create an image."
         case .sizeReadingFailed: return "Can't get image size."
@@ -130,11 +239,11 @@ extension IconService.Error: LocalizedError {
 }
 
 extension CIContext {
-    
+
     func representation(of image: CIImage,
                         format: CIFormat = kCIFormatRGBA8,
                         colorSpace: CGColorSpace,
-                        options: [AnyHashable : Any] = [:]) -> Data? {
+                        options: [AnyHashable: Any] = [:]) -> Data? {
         if #available(OSX 10.13, *) {
             return pngRepresentation(of: image, format: format, colorSpace: colorSpace)
         }

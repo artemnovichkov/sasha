@@ -202,6 +202,7 @@ final class IconService {
     ///   - folderName: The name of folder for generated icons.
     /// - Throws: `IconService.Error` errors.
     private func generateIcons(from image: CIImage, icons: [IconRepresentable], folderName: String) throws {
+        let image = image.settingAlphaOne(in: image.extent)
         let filter = CIFilter(name: Keys.lanczosFilterName)!
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(1, forKey: kCIInputAspectRatioKey)

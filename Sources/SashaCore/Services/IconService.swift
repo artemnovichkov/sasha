@@ -4,6 +4,7 @@
 
 import CoreImage
 import Files
+import AppKit
 
 final class IconService {
 
@@ -135,6 +136,9 @@ final class IconService {
     // MARK: - Private
 
     private func image(for imageURL: URL) throws -> CIImage {
+        if let rep = NSImageRep(contentsOf: imageURL), !rep.isOpaque {
+            print("\u{001B}[0;33mImage has transparency... filling regions...\u{001B}[0;0m")
+        }
         guard let image = CIImage(contentsOf: imageURL) else {
             throw Error.imageCreationFailed
         }

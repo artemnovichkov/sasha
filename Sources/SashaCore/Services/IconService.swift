@@ -4,6 +4,7 @@
 
 import CoreImage
 import Files
+import AppKit
 
 final class IconService {
 
@@ -139,6 +140,9 @@ final class IconService {
     // MARK: - Private
 
     private func image(for imageURL: URL) throws -> CIImage {
+        if let rep = NSImageRep(contentsOf: imageURL), !rep.isOpaque {
+            print("\u{001B}[0;33mImage has transparency... filling regions...\u{001B}[0;0m")
+        }
         guard let image = CIImage(contentsOf: imageURL) else {
             throw Error.imageCreationFailed
         }
@@ -210,6 +214,7 @@ final class IconService {
     ///   - folderName: The name of folder for generated icons.
     /// - Throws: `IconService.Error` errors.
     private func generateIcons(from image: CIImage, icons: [IconRepresentable], folderName: String) throws {
+        let image = image.settingAlphaOne(in: image.extent)
         let filter = CIFilter(name: Keys.lanczosFilterName)!
         filter.setValue(image, forKey: kCIInputImageKey)
         filter.setValue(1, forKey: kCIInputAspectRatioKey)

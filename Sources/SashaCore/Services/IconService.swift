@@ -19,6 +19,7 @@ final class IconService {
         static let height = "PixelHeight"
         static let lanczosFilterName = "CILanczosScaleTransform"
         static let iconName = "Icon-App"
+        static let watchOSIconName = "Icon-AppleWatch"
         static let complicationName = "Complication"
         static let iconSetName = "AppIcon.appiconset"
         static let complicationSetName = "Complication.complicationset"
@@ -50,7 +51,7 @@ final class IconService {
         if let idioms = idioms {
             fullIdioms.append(contentsOf: idioms)
         }
-        try generateIcons(for: imageURL, idioms: fullIdioms, output: output)
+        try generateIcons(withIconName: Keys.iconName, for: imageURL, idioms: fullIdioms, output: output)
     }
 
     /// Generates icons for macOS platform.
@@ -59,7 +60,7 @@ final class IconService {
     /// - Parameter output: Output path for generated icons. Default value is nil.
     /// - Throws: `IconService.Error` errors.
     func generateMacOSIcons(for imageURL: URL, output: String? = nil) throws {
-        try generateIcons(for: imageURL, idioms: [.mac], output: output)
+        try generateIcons(withIconName: Keys.iconName, for: imageURL, idioms: [.mac], output: output)
     }
 
     /// Generates icons for watchOS platform.
@@ -68,7 +69,10 @@ final class IconService {
     /// - Parameter output: Output path for generated icons. Default value is nil.
     /// - Throws: `IconService.Error` errors.
     func generateWatchOSIcons(for imageURL: URL, output: String? = nil) throws {
-        try generateIcons(for: imageURL, idioms: [.watch, .watchMarketing], output: output)
+        try generateIcons(withIconName: Keys.watchOSIconName,
+                          for: imageURL,
+                          idioms: [.watch, .watchMarketing],
+                          output: output)
     }
 
     /// Generates icons for watchOS platform.
@@ -150,13 +154,17 @@ final class IconService {
 
     /// Generates icons for Apple platforms.
     ///
+    /// - Parameter iconName: The name of generated icons.
     /// - Parameter imageURL: The url for original image.
     /// - Parameter idioms: Idioms for icons.
     /// - Parameter output: Output path for generated icons. Default value is nil.
     /// - Throws: `IconService.Error` errors.
-    private func generateIcons(for imageURL: URL, idioms: [Icon.Idiom], output: String? = nil) throws {
+    private func generateIcons(withIconName iconName: String,
+                               for imageURL: URL,
+                               idioms: [Icon.Idiom],
+                               output: String? = nil) throws {
         let image = try self.image(for: imageURL)
-        let iconSet = iconFactory.makeSet(withName: Keys.iconName,
+        let iconSet = iconFactory.makeSet(withName: iconName,
                                           idioms: idioms)
         var folderName = Keys.iconSetName
         if let output = output {

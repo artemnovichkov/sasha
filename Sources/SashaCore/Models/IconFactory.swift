@@ -98,10 +98,10 @@ final class IconFactory {
                     Icon(idiom: idiom,size: 512, filename: name, scale: 1),
                     Icon(idiom: idiom,size: 512, filename: name, scale: 2)]
         case .watch:
-            return [Icon(idiom: idiom,size: 24, filename: name, scale: 2, role: .notificationCenter, subtype: .mm38),
+            return [Icon(idiom: idiom, size: 24, filename: name, scale: 2, role: .notificationCenter, subtype: .mm38),
                     Icon(idiom: idiom, size: 27.5, filename: name, scale: 2, role: .notificationCenter, subtype: .mm42),
-                    Icon(idiom: idiom,size: 29, filename: name, scale: 2, role: .companionSettings),
-                    Icon(idiom: idiom, size: 29, filename: name, scale: 3, role: .companionSettings),
+                    Icon(idiom: idiom, size: 29, filename: name + "-Companion", scale: 2, role: .companionSettings),
+                    Icon(idiom: idiom, size: 29, filename: name + "-Companion", scale: 3, role: .companionSettings),
                     Icon(idiom: idiom, size: 40, filename: name, scale: 2, role: .appLauncher, subtype: .mm38),
                     Icon(idiom: idiom, size: 44, filename: name, scale: 2, role: .appLauncher, subtype: .mm40),
                     Icon(idiom: idiom, size: 50, filename: name, scale: 2, role: .appLauncher, subtype: .mm44),
@@ -109,7 +109,7 @@ final class IconFactory {
                     Icon(idiom: idiom, size: 98, filename: name, scale: 2, role: .quickLook, subtype: .mm42),
                     Icon(idiom: idiom, size: 108, filename: name, scale: 2, role: .quickLook, subtype: .mm44)]
         case .watchMarketing:
-            return [Icon(idiom: idiom, size: 1024, filename: name, scale: 1)]
+            return [Icon(idiom: idiom, size: 1024, filename: name + "-AppStore", scale: 1)]
         case .complicationCircular:
             return [Icon(idiom: idiom, size: 16, filename: name + "-\(Icon.Subtype.mm38.rawValue)", screenWidth: "<=145", scale: 2),
                     Icon(idiom: idiom, size: 18, filename: name + "-\(Icon.Subtype.mm42.rawValue)", screenWidth: ">161", scale: 2),

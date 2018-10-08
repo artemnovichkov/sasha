@@ -10,7 +10,7 @@ final class IconService {
     enum Error: Swift.Error {
         case imageCreationFailed
         case sizeReadingFailed
-        case wrongSizeDetected
+        case wrongSizeDetected(actualWidth: Float, actualHeight: Float, expectedWidth: Float, expectedHeight: Float)
         case imageRenderingFailed
     }
 
@@ -143,7 +143,10 @@ final class IconService {
                 throw Error.sizeReadingFailed
         }
         guard width == Keys.defaultSize, height == Keys.defaultSize else {
-            throw Error.wrongSizeDetected
+            throw Error.wrongSizeDetected(actualWidth: width,
+                                          actualHeight: height,
+                                          expectedWidth: Keys.defaultSize,
+                                          expectedHeight: Keys.defaultSize)
         }
         return image
     }
@@ -232,7 +235,10 @@ extension IconService.Error: CustomStringConvertible {
         switch self {
         case .imageCreationFailed: return "Can't create an image."
         case .sizeReadingFailed: return "Can't get image size."
-        case .wrongSizeDetected: return "Image has wrong size."
+        case let .wrongSizeDetected(actualWidth, actualHeight, expectedWidth, expectedHeight):
+            let actualString = String(format: "%g", actualWidth) + "x" + String(format: "%g", actualHeight)
+            let expectedString = String(format: "%g", expectedWidth) + "x" + String(format: "%g", expectedHeight)
+            return "Image has wrong size (actual \(actualString), expected \(expectedString))."
         case .imageRenderingFailed: return "Can't render the image."
         }
     }

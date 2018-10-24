@@ -4,13 +4,14 @@
 
 import CoreImage
 import Files
+import AppKit
 
 final class IconService {
 
     enum Error: Swift.Error {
         case imageCreationFailed
         case sizeReadingFailed
-        case wrongSizeDetected
+        case wrongSizeDetected(actualWidth: Float, actualHeight: Float, expectedWidth: Float, expectedHeight: Float)
         case imageRenderingFailed
     }
 
@@ -19,6 +20,7 @@ final class IconService {
         static let height = "PixelHeight"
         static let lanczosFilterName = "CILanczosScaleTransform"
         static let iconName = "Icon-App"
+        static let watchOSIconName = "Icon-AppleWatch"
         static let complicationName = "Complication"
         static let iconSetName = "AppIcon.appiconset"
         static let complicationSetName = "Complication.complicationset"
@@ -49,7 +51,7 @@ final class IconService {
         if let idioms = idioms {
             fullIdioms.append(contentsOf: idioms)
         }
-        try generateIcons(for: imageURL, idioms: fullIdioms, output: output)
+        try generateIcons(withIconName: Keys.iconName, for: imageURL, idioms: fullIdioms, output: output)
     }
 
     /// Generates icons for macOS platform.
@@ -58,7 +60,7 @@ final class IconService {
     /// - Parameter output: Output path for generated icons. Default value is nil.
     /// - Throws: `IconService.Error` errors.
     func generateMacOSIcons(for imageURL: URL, output: String? = nil) throws {
-        try generateIcons(for: imageURL, idioms: [.mac], output: output)
+        try generateIcons(withIconName: Keys.iconName, for: imageURL, idioms: [.mac], output: output)
     }
 
     /// Generates icons for watchOS platform.
@@ -67,7 +69,10 @@ final class IconService {
     /// - Parameter output: Output path for generated icons. Default value is nil.
     /// - Throws: `IconService.Error` errors.
     func generateWatchOSIcons(for imageURL: URL, output: String? = nil) throws {
-        try generateIcons(for: imageURL, idioms: [.watch, .watchMarketing], output: output)
+        try generateIcons(withIconName: Keys.watchOSIconName,
+                          for: imageURL,
+                          idioms: [.watch, .watchMarketing],
+                          output: output)
     }
 
     /// Generates icons for watchOS platform.
@@ -141,6 +146,9 @@ final class IconService {
     // MARK: - Private
 
     private func image(for imageURL: URL) throws -> CIImage {
+        if let rep = NSImageRep(contentsOf: imageURL), !rep.isOpaque {
+            print("\u{001B}[0;33mImage has transparency... filling regions...\u{001B}[0;0m")
+        }
         guard let image = CIImage(contentsOf: imageURL) else {
             throw Error.imageCreationFailed
         }
@@ -149,12 +157,17 @@ final class IconService {
 
     /// Generates icons for Apple platforms.
     ///
+    /// - Parameter iconName: The name of generated icons.
     /// - Parameter imageURL: The url for original image.
     /// - Parameter idioms: Idioms for icons.
     /// - Parameter output: Output path for generated icons. Default value is nil.
     /// - Throws: `IconService.Error` errors.
-    private func generateIcons(for imageURL: URL, idioms: [Icon.Idiom], output: String? = nil) throws {
-        let iconSet = iconFactory.makeSet(withName: Keys.iconName,
+    private func generateIcons(withIconName iconName: String,
+                               for imageURL: URL,
+                               idioms: [Icon.Idiom],
+                               output: String? = nil) throws {
+        let image = try self.image(for: imageURL)
+        let iconSet = iconFactory.makeSet(withName: iconName,
                                           idioms: idioms)
         Keys.defaultSize = maxSize(for: iconSet)
         let image = try self.image(for: imageURL)
@@ -258,7 +271,10 @@ extension IconService.Error: CustomStringConvertible {
         switch self {
         case .imageCreationFailed: return "Can't create an image."
         case .sizeReadingFailed: return "Can't get image size."
-        case .wrongSizeDetected: return "Image has wrong size."
+        case let .wrongSizeDetected(actualWidth, actualHeight, expectedWidth, expectedHeight):
+            let actualString = String(format: "%g", actualWidth) + "x" + String(format: "%g", actualHeight)
+            let expectedString = String(format: "%g", expectedWidth) + "x" + String(format: "%g", expectedHeight)
+            return "Image has wrong size (actual \(actualString), expected \(expectedString))."
         case .imageRenderingFailed: return "Can't render the image."
         }
     }

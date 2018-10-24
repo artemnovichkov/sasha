@@ -81,6 +81,7 @@ final class IconService {
     /// - Parameter output: Output path for generated icons. Default value is nil.
     /// - Throws: `IconService.Error` errors.
     func generateWatchOSComplicationIcons(for imageURL: URL, output: String? = nil) throws {
+        let image = try self.image(for: imageURL)
         let idioms: [Icon.Idiom] = [.complicationCircular,
                                     .complicationExtraLarge,
                                     .complicationGraphicBezel,
@@ -93,12 +94,6 @@ final class IconService {
         if let output = output {
             folderName = output + folderName
         }
-        for idiom in idioms {
-            let iconSet = iconFactory.makeSet(withName: Keys.complicationName,
-                                              idioms: [idiom])
-            Keys.defaultSize = max(Keys.defaultSize, maxSize(for: iconSet))
-        }
-        let image = try self.image(for: imageURL)
         for idiom in idioms {
             let iconSet = iconFactory.makeSet(withName: Keys.complicationName,
                                               idioms: [idiom])
@@ -169,8 +164,6 @@ final class IconService {
         let image = try self.image(for: imageURL)
         let iconSet = iconFactory.makeSet(withName: iconName,
                                           idioms: idioms)
-        Keys.defaultSize = maxSize(for: iconSet)
-        let image = try self.image(for: imageURL)
         var folderName = Keys.iconSetName
         if let output = output {
             folderName = output + folderName
@@ -251,14 +244,14 @@ final class IconService {
                 throw Error.sizeReadingFailed
         }
 
-        //check for non-square image (needs to be adapted later for non-square Apple TV icons)
-        guard width == height else {
-            throw Error.wrongSizeDetected
-        }
-
         //check for smaller image than necessary
         guard width >= icon.iconSize, height >= icon.iconSize else {
-            throw Error.wrongSizeDetected
+            throw Error.wrongSizeDetected(actualWidth: width, actualHeight: height, expectedWidth: icon.iconSize, expectedHeight: icon.iconSize)
+        }
+        
+        //check for non-square image (needs to be adapted later for non-square Apple TV icons)
+        guard width == height else {
+            throw Error.wrongSizeDetected(actualWidth: width, actualHeight: height, expectedWidth: icon.iconSize, expectedHeight: icon.iconSize)
         }
 
         return icon.iconSize / width

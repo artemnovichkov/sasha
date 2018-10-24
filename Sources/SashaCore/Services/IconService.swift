@@ -238,7 +238,7 @@ final class IconService {
             try file.write(data: outputData)
         }
     }
-    
+
     /// Checks icon and image size compatibility and returns the scale factor between them
     ///
     /// - Parameters:
@@ -250,17 +250,17 @@ final class IconService {
             let height = image.properties[Keys.height] as? Float else {
                 throw Error.sizeReadingFailed
         }
-        
+
         //check for non-square image (needs to be adapted later for non-square Apple TV icons)
         guard width == height else {
             throw Error.wrongSizeDetected
         }
-        
+
         //check for smaller image than necessary
         guard width >= icon.iconSize, height >= icon.iconSize else {
             throw Error.wrongSizeDetected
         }
-        
+
         return icon.iconSize / width
     }
 }

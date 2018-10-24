@@ -24,7 +24,6 @@ final class IconService {
         static let complicationSetName = "Complication.complicationset"
         static let contentsName = "Contents.json"
         static let androidIconFolder = "Android"
-        static var defaultSize: Float = 0
     }
 
     private let iconFactory: IconFactory
@@ -77,6 +76,7 @@ final class IconService {
     /// - Parameter output: Output path for generated icons. Default value is nil.
     /// - Throws: `IconService.Error` errors.
     func generateWatchOSComplicationIcons(for imageURL: URL, output: String? = nil) throws {
+        let image = try self.image(for: imageURL)
         let idioms: [Icon.Idiom] = [.complicationCircular,
                                     .complicationExtraLarge,
                                     .complicationGraphicBezel,
@@ -89,12 +89,6 @@ final class IconService {
         if let output = output {
             folderName = output + folderName
         }
-        for idiom in idioms {
-            let iconSet = iconFactory.makeSet(withName: Keys.complicationName,
-                                              idioms: [idiom])
-            Keys.defaultSize = max(Keys.defaultSize, maxSize(for: iconSet))
-        }
-        let image = try self.image(for: imageURL)
         for idiom in idioms {
             let iconSet = iconFactory.makeSet(withName: Keys.complicationName,
                                               idioms: [idiom])
@@ -111,13 +105,12 @@ final class IconService {
     /// - Parameter output: Output path for generated icons. Default value is nil.
     /// - Throws: `IconService.Error` errors.
     func generateAndroidIcons(for imageURL: URL, output: String? = nil) throws {
+        let image = try self.image(for: imageURL)
         var folderName = Keys.androidIconFolder
         if let output = output {
             folderName = output + folderName
         }
         let icons = iconFactory.makeAndroidIcons()
-        Keys.defaultSize = maxSize(for: icons)
-        let image = try self.image(for: imageURL)
         try generateIcons(from: image,
                           icons: icons,
                           folderName: folderName)
@@ -129,13 +122,12 @@ final class IconService {
     /// - Parameter output: Output path for generated icons. Default value is nil.
     /// - Throws: `IconService.Error` errors.
     func generateAndroidWearIcons(for imageURL: URL, output: String? = nil) throws {
+        let image = try self.image(for: imageURL)
         var folderName = Keys.androidIconFolder
         if let output = output {
             folderName = output + folderName
         }
         let icons = iconFactory.makeAndroidWearIcons()
-        Keys.defaultSize = maxSize(for: icons)
-        let image = try self.image(for: imageURL)
         try generateIcons(from: image,
                           icons: icons,
                           folderName: folderName)
@@ -147,24 +139,7 @@ final class IconService {
         guard let image = CIImage(contentsOf: imageURL) else {
             throw Error.imageCreationFailed
         }
-        guard let width = image.properties[Keys.width] as? Float,
-            let height = image.properties[Keys.height] as? Float else {
-                throw Error.sizeReadingFailed
-        }
-        guard width >= Keys.defaultSize, height >= Keys.defaultSize else {
-            throw Error.wrongSizeDetected
-        }
         return image
-    }
-    
-    func maxSize(for iconSet: AppIconSet) -> Float {
-        let max = iconSet.icons.map{ $0.size * $0.scale }.max()
-        return max ?? 0
-    }
-    
-    func maxSize(for iconSet: [AndroidIcon]) -> Float {
-        let max = iconSet.map{ $0.size }.max()
-        return max ?? 0
     }
 
     /// Generates icons for Apple platforms.
@@ -174,10 +149,9 @@ final class IconService {
     /// - Parameter output: Output path for generated icons. Default value is nil.
     /// - Throws: `IconService.Error` errors.
     private func generateIcons(for imageURL: URL, idioms: [Icon.Idiom], output: String? = nil) throws {
+        let image = try self.image(for: imageURL)
         let iconSet = iconFactory.makeSet(withName: Keys.iconName,
                                           idioms: idioms)
-        Keys.defaultSize = maxSize(for: iconSet)
-        let image = try self.image(for: imageURL)
         var folderName = Keys.iconSetName
         if let output = output {
             folderName = output + folderName
@@ -231,7 +205,7 @@ final class IconService {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
 
         try icons.forEach { icon in
-            let scale = icon.iconSize / Keys.defaultSize
+            let scale = try scaleIcon(icon, with: image)
             filter.setValue(scale, forKey: kCIInputScaleKey)
             guard let outputImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else {
                 throw Error.imageRenderingFailed
@@ -244,6 +218,31 @@ final class IconService {
             let file = try fileSystem.createFile(at: path)
             try file.write(data: outputData)
         }
+    }
+    
+    /// Checks icon and image size compatibility and returns the scale factor between them
+    ///
+    /// - Parameters:
+    ///   - image: The original image.
+    ///   - icon: Object that represents icon information.
+    /// - Throws: `IconService.Error` errors.
+    func scaleIcon(_ icon: IconRepresentable, with image: CIImage) throws -> Float {
+        guard let width = image.properties[Keys.width] as? Float,
+            let height = image.properties[Keys.height] as? Float else {
+                throw Error.sizeReadingFailed
+        }
+        
+        //check for non-square image (needs to be adapted later for non-square Apple TV icons)
+        guard width == height else {
+            throw Error.wrongSizeDetected
+        }
+        
+        //check for smaller image than necessary
+        guard width >= icon.iconSize, height >= icon.iconSize else {
+            throw Error.wrongSizeDetected
+        }
+        
+        return icon.iconSize / width
     }
 }
 

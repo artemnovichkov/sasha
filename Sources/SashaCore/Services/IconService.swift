@@ -249,7 +249,7 @@ final class IconService {
             throw Error.wrongSizeDetected(actualWidth: width, actualHeight: height,
                                           expectedWidth: icon.iconSize, expectedHeight: icon.iconSize)
         }
-        
+
         //check for non-square image (needs to be adapted later for non-square Apple TV icons)
         guard width == height else {
             throw Error.wrongSizeDetected(actualWidth: width, actualHeight: height,

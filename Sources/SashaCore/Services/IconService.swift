@@ -26,7 +26,6 @@ final class IconService {
         static let complicationSetName = "Complication.complicationset"
         static let contentsName = "Contents.json"
         static let androidIconFolder = "Android"
-        static let defaultSize: Float = 1024
     }
 
     private let iconFactory: IconFactory
@@ -116,8 +115,9 @@ final class IconService {
         if let output = output {
             folderName = output + folderName
         }
+        let icons = iconFactory.makeAndroidIcons()
         try generateIcons(from: image,
-                          icons: iconFactory.makeAndroidIcons(),
+                          icons: icons,
                           folderName: folderName)
     }
 
@@ -132,8 +132,9 @@ final class IconService {
         if let output = output {
             folderName = output + folderName
         }
+        let icons = iconFactory.makeAndroidWearIcons()
         try generateIcons(from: image,
-                          icons: iconFactory.makeAndroidWearIcons(),
+                          icons: icons,
                           folderName: folderName)
     }
 
@@ -145,16 +146,6 @@ final class IconService {
         }
         guard let image = CIImage(contentsOf: imageURL) else {
             throw Error.imageCreationFailed
-        }
-        guard let width = image.properties[Keys.width] as? Float,
-            let height = image.properties[Keys.height] as? Float else {
-                throw Error.sizeReadingFailed
-        }
-        guard width == Keys.defaultSize, height == Keys.defaultSize else {
-            throw Error.wrongSizeDetected(actualWidth: width,
-                                          actualHeight: height,
-                                          expectedWidth: Keys.defaultSize,
-                                          expectedHeight: Keys.defaultSize)
         }
         return image
     }
@@ -226,7 +217,7 @@ final class IconService {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
 
         try icons.forEach { icon in
-            let scale = icon.iconSize / Keys.defaultSize
+            let scale = try scaleIcon(icon, with: image)
             filter.setValue(scale, forKey: kCIInputScaleKey)
             guard let outputImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else {
                 throw Error.imageRenderingFailed
@@ -239,6 +230,33 @@ final class IconService {
             let file = try fileSystem.createFile(at: path)
             try file.write(data: outputData)
         }
+    }
+
+    /// Checks icon and image size compatibility and returns the scale factor between them
+    ///
+    /// - Parameters:
+    ///   - image: The original image.
+    ///   - icon: Object that represents icon information.
+    /// - Throws: `IconService.Error` errors.
+    func scaleIcon(_ icon: IconRepresentable, with image: CIImage) throws -> Float {
+        guard let width = image.properties[Keys.width] as? Float,
+            let height = image.properties[Keys.height] as? Float else {
+                throw Error.sizeReadingFailed
+        }
+
+        //check for smaller image than necessary
+        guard width >= icon.iconSize, height >= icon.iconSize else {
+            throw Error.wrongSizeDetected(actualWidth: width, actualHeight: height,
+                                          expectedWidth: icon.iconSize, expectedHeight: icon.iconSize)
+        }
+
+        //check for non-square image (needs to be adapted later for non-square Apple TV icons)
+        guard width == height else {
+            throw Error.wrongSizeDetected(actualWidth: width, actualHeight: height,
+                                          expectedWidth: icon.iconSize, expectedHeight: icon.iconSize)
+        }
+
+        return icon.iconSize / width
     }
 }
 
